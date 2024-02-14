@@ -8,7 +8,6 @@ An implementation of the [SortableJS library](https://sortablejs.github.io/Sorta
 Great implementation, but I would like to make some changes:
 - extract package
 - use .NET 8.0 project style
-- remove tuple from parameters
 
 > The latest changes will appear first on the development branch.
 
