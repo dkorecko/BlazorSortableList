@@ -1,4 +1,4 @@
-using BlazorSortableList.DemoApp;
+using BlazorSortableList.DemoAppNet7;
 
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

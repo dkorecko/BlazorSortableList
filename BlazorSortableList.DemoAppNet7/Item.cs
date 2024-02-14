@@ -1,4 +1,4 @@
-namespace BlazorSortableList.DemoApp;
+namespace BlazorSortableList.DemoAppNet7;
 
 
 public class Item
