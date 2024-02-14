@@ -1,8 +1,16 @@
-# Blazor Sortable
-
+# Blazor Sortable List
+## Overview
 An implementation of the [SortableJS library](https://sortablejs.github.io/Sortable/) for Blazor. This example shows you how to reorder elements within a list using drag and drop.
 
 [View Demos](https://mango-flower-090e9130f.4.azurestaticapps.net/)
+[View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
+
+Great implementation, but I would like to make some changes:
+- extract package
+- use .NET 8.0 project style
+- remove tuple from parameters
+
+> The latest changes will appear first on the development branch.
 
 ## Prerequisites
 
@@ -40,7 +48,7 @@ The SortableItemTemplate can contain any markup or components that you want.
 
 ### Properties
 
-All proerties are optional and have default values.
+All properties are optional and have default values.
 
 `Id`: String (Default: GUID): The id of the HTML element that will be turned into a sortable. If you don't supply this, a random id (GUID) will be generated for you.
 
