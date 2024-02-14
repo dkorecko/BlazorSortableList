@@ -1,5 +1,20 @@
 ﻿@page "/"
+@attribute [StreamRendering]
+
 @using BlazorSortableList.DemoApp.Client.Components
 
-<PageTitle>Blazor sortable list</PageTitle>
+@inject NavigationManager Navigation
+
+<PageTitle>Blazor sortable list demo</PageTitle>
 <PageHeader></PageHeader>
+
+@code
+{
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await Task.Delay(1000);
+        Navigation.NavigateTo("demopage");
+    }
+}
