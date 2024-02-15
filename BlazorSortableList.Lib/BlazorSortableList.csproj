@@ -10,7 +10,7 @@
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageIcon>sortable-list.png</PackageIcon>
 		<PackageProjectUrl>https://github.com/AlexNek/BlazorSortableList</PackageProjectUrl>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Copyright>Burke Holland, Alex Nek</Copyright>
 		<Description>An implementation of the SortableJS library for Blazor</Description>
 		<StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
