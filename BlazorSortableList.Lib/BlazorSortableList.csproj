@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageReadmeFile>README.MD</PackageReadmeFile>
     <RepositoryUrl>https://github.com/AlexNek/BlazorSortableList</RepositoryUrl>
-    <PackageOutputPath>$(ProjectDir)\nuget</PackageOutputPath>
+    <PackageOutputPath>.\bin\nuget</PackageOutputPath>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageIcon>sortable-list.png</PackageIcon>
     <PackageProjectUrl>https://github.com/AlexNek/BlazorSortableList</PackageProjectUrl>
