@@ -12,6 +12,6 @@
     <description>$description$</description>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright>Copyright 2024</copyright>
-    <tags>BlazorSortableList, Drag and drop, Blazor, C#, Web, NET8.0</tags>
+    <tags>BlazorSortableList;Drag and drop;Blazor;C#;Web;NET8.0</tags>
   </metadata>
 </package>
