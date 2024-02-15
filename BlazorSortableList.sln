@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{99D07580-0BAE-48E3-AF82-DF3E3B5480D2}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
+		.github\workflows\azure-static-web-apps-alex-deploy-public.yml = .github\workflows\azure-static-web-apps-alex-deploy-public.yml
 		README.MD = README.MD
 	EndProjectSection
 EndProject
@@ -13,9 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableList", "Blazo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableList.DemoAppNet7", "BlazorSortableList.DemoAppNet7\BlazorSortableList.DemoAppNet7.csproj", "{5A1B8983-38B0-4F5A-ADCC-4FC35E8C031F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSortableList.DemoApp", "BlazorSortableList.DemoApp\BlazorSortableList.DemoApp\BlazorSortableList.DemoApp.csproj", "{0A827EED-4B7C-4A8D-A352-11D265A299F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableList.DemoApp", "BlazorSortableList.DemoApp\BlazorSortableList.DemoApp\BlazorSortableList.DemoApp.csproj", "{0A827EED-4B7C-4A8D-A352-11D265A299F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSortableList.DemoApp.Client", "BlazorSortableList.DemoApp\BlazorSortableList.DemoApp.Client\BlazorSortableList.DemoApp.Client.csproj", "{DDBD9CF5-2716-4625-94FF-123FF347461C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSortableList.DemoApp.Client", "BlazorSortableList.DemoApp\BlazorSortableList.DemoApp.Client\BlazorSortableList.DemoApp.Client.csproj", "{DDBD9CF5-2716-4625-94FF-123FF347461C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{6C4D0420-3E08-4BC1-814D-C84B36B84AE2}"
 EndProject
