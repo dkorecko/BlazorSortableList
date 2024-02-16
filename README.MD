@@ -89,6 +89,7 @@ All properties are optional and have default values.
 |Handle|String|""|1.0|The CSS class you want the sortable to respect as the drag handle|
 |Filter|String|""|1.0|The CSS class you want to use to identify elements that cannot be sorted or moved|
 |ForceFallback|Boolean|true|1.0|Enable HTML5 drag and drop by setting to `false`|
+|DefaultSort|Boolean|false|1.1|Enable simplified use by setting to `true`.|
 
 ### Events
 
@@ -100,6 +101,17 @@ You will need to handle all events yourself. **If you don't handle any events, n
 
 Here is an example of how to reorder your list when the OnUpdate is fired...
 
+*Razor*
+```html
+<SortableList Id="simpleList" Items="items" OnUpdate="@SortList" Context="item">
+    <SortableItemTemplate>
+        <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
+            <p class="is-size-4 p-2 ml-4">@item.Name</p>
+        </div>
+    </SortableItemTemplate>
+</SortableList>
+```
+*C#*
 ```csharp
     private void SortList((int oldIndex, int newIndex) indices)
     {
@@ -122,5 +134,21 @@ Here is an example of how to reorder your list when the OnUpdate is fired...
     }
 ```
 
+## Enhanced version
+
+From version 1.1 It is possible to use simplified code.
+*Razor*
+```html
+<SortableList Items="items" Context="item" DefaultSort>
+    <SortableItemTemplate>
+        <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
+            <p class="is-size-4 p-2 ml-4">@item.Name</p>
+        </div>
+    </SortableItemTemplate>
+</SortableList>
+```
+No additional C# code required.
+
 ## History
-V1.0.0 - orignal component
+V1.1 - added DefaultSort parameter
+V1.0 - orignal component
