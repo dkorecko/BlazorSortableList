@@ -1,0 +1,33 @@
+﻿@page "/demopage"
+@using BlazorSortableList.DemoApp.Client.Components
+@rendermode InteractiveAuto
+
+<PageTitle>Blazor sortable list demo</PageTitle>
+<PageHeader></PageHeader>
+<div class="has-background-light">
+    <section class="section has-background-white">
+        <SimpleList></SimpleList>
+    </section>
+    <section class="section">
+        <SharedLists></SharedLists>
+    </section>
+    <section class="section has-background-white">
+        <Cloning></Cloning>
+    </section>
+    <section class="section">
+        <DisablingSorting></DisablingSorting>
+    </section>
+    <section class="section has-background-white">
+        <DragHandles></DragHandles>
+    </section>
+    <section class="section">
+        <Filtering></Filtering>
+    </section>
+    <section class="section">
+        <ForceFallback></ForceFallback>
+    </section>
+</div>
+
+@code {
+
+}
