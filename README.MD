@@ -2,7 +2,8 @@
 ## Overview
 An implementation of the [SortableJS library](https://sortablejs.github.io/Sortable/) for Blazor. This example shows you how to reorder elements within a list using drag and drop.
 
-[View Demos](https://mango-flower-090e9130f.4.azurestaticapps.net/)
+[View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
+[View Demos .NET8 server prerendering](https://blazorsortablelistdemoapp2024.azurewebsites.net/)
 [View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
 
 Great implementation, but I would like to make some changes:
@@ -13,21 +14,42 @@ Great implementation, but I would like to make some changes:
 
 ## Prerequisites
 
-- [dotnet 7](https://dotnet.microsoft.com/download/dotnet/7.0)
+- [dotnet 8](https://dotnet.microsoft.com/download/dotnet/8.0)
 
 ## Running Locally
 
 1. Clone this repository.
-1. Run the project using `dotnet watch`.
+1. Run the project 'BlazorSortableList.DemoApp' using `dotnet watch`.
 
 ## How to use it in your own project
 
-1. Add SortableJS to your `index.html` file. You can either download from the [SortableJS website](https://sortablejs.github.io/Sortable/) or use a CDN...
+1. **Install the latest NuGet Package**
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
+ - Using Package Manager
+```
+Install-Package BlazorSortableList
+```
 
-1. Add the `SortableList.razor`, `SortableList.razor.css` and `SortableList.razor.js` files to your project.
-1. Add the SortableList component to your page and define the SortableItemTemplate...
+ - Using .NET CLI
+```
+dotnet add package BlazorSortableList
+```
+
+ - Using MS VS Manage NuGet Packages search for `BlazorSortableList`
+
+2. Add SortableJS to your `index.html`/`app.razor` file. You can either download from the [SortableJS website](https://sortablejs.github.io/Sortable/) or use a CDN...
+
+ ```
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+ ```
+
+3. Add the `SortableList.razor.js` to your `index.html`/'app.razor' file..
+
+ ```
+<script type="module" src="_content/BlazorSortableList/SortableList.razor.js"></script>
+ ```
+
+4. Add the SortableList component to your page and define the SortableItemTemplate...
 
         <SortableList Id="sortable" Items="items" OnUpdate="@SortList" Context="item">
             <SortableItemTemplate>
@@ -37,13 +59,13 @@ Great implementation, but I would like to make some changes:
             </SortableItemTemplate>
         </SortableList>
 
-- Items: The list of items to be displayed. Can be of any type.
-- OnUpdate: The method to be called when the list is updated.
-- Context: The name of the variable to be used in the template.
+ - ***Items***: The list of items to be displayed. Can be of any type.
+ - ***OnUpdate***: The method to be called when the list is updated.
+ - ***Context***: The name of the variable to be used in the template.
 
-The SortableItemTemplate can contain any markup or components that you want.
+The `SortableItemTemplate` can contain any markup or components that you want.
 
-## API
+## Attributes
 
 ### Properties
 
@@ -65,7 +87,7 @@ All properties are optional and have default values.
 
 `ForceFallback`: Boolean (Default: True) - Enable HTML5 drag and drop by setting to `false`.
 
-### Methods
+### Events
 
 `OnUpdate` (Optional): The method to be called when the list is updated. You can name this method whatever you like, but it expects a `oldIndex` and `newIndex` parameters when the drag and drop occurs.
 
@@ -75,6 +97,7 @@ You will need to handle all events yourself. **If you don't handle any events, n
 
 Here is an example of how to reorder your list when the OnUpdate is fired...
 
+```csharp
     private void SortList((int oldIndex, int newIndex) indices)
     {
         var (oldIndex, newIndex) = indices;
@@ -94,3 +117,7 @@ Here is an example of how to reorder your list when the OnUpdate is fired...
 
         StateHasChanged();
     }
+```
+
+## History
+V1.0.0 - orignal component
