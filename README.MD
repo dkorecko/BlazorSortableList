@@ -1,17 +1,24 @@
 # Blazor Sortable List
 ## Overview
-An implementation of the [SortableJS library](https://sortablejs.github.io/Sortable/) for Blazor. This example shows you how to reorder elements within a list using drag and drop.
+Fork an implementation of the [SortableJS library](https://sortablejs.github.io/Sortable/) for Blazor. This example shows you how to reorder elements within a list using drag and drop.
 
 - [View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
-- [View Demos .NET8 server prerendering](https://blazorsortablelistdemoapp2024.azurewebsites.net/)
 - [View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
+
+> Original JS library has more features as implemented now
 
 Great implementation, but I would like to make some changes:
 - extract package
-- use .NET 8.0 project style
+- use .NET 8.0 project style for Demo application
 - I am thinking of an architecture/usability improvement.
 
 > The latest changes will appear first on the development branch.
+
+
+Compare current implementation with original version:
+- [View Demos .NET8 server prerendering](https://blazorsortablelistdemoapp2024.azurewebsites.net/)
+
+
 
 ## Prerequisites
 
@@ -72,21 +79,16 @@ The `SortableItemTemplate` can contain any markup or components that you want.
 
 All properties are optional and have default values.
 
-`Id`: String (Default: GUID): The id of the HTML element that will be turned into a sortable. If you don't supply this, a random id (GUID) will be generated for you.
-
-`Group`: String (Default: null) - Used for dragging between lists. Set the group to the same value on both lists to enable.
-
-`Pull`: String (Default: null) - Used when you want to clone elments into a list instead of moving them. Set `Pull` to "clone".
-
-`Put`: Boolean (Default: True) - Set to false to disable dropping from another list onto the current list.
-
-`Sort`: Boolean (Default: True) - Disable sorting within a list by setting to `false`.
-
-`Handle` (Default: ""): The CSS class you want the sortable to respect as the drag handle. 
-
-`Filter` (Default: ""): The CSS class you want to use to identify elements that cannot be sorted or moved.
-
-`ForceFallback`: Boolean (Default: True) - Enable HTML5 drag and drop by setting to `false`.
+| Name | Type | Default|Ver.|Description|
+|------|------|--------|---|-----------|
+|   Id   |  String|new GUID|1.0|The id of the HTML element that will be turned into a sortable list. If you don't supply this, a random id (GUID) will be generated for you|
+|Group|String|new GUID|1.0|Used for dragging between lists. Set the group to the same value on both lists to enable|
+|Pull|String|null|1.0|Used when you want to clone elments into a list instead of moving them. Set `Pull` to "clone"|
+|Put|Boolean|true|1.0|Set to false to disable dropping from another list onto the current list|
+|Sort|Boolean|true|1.0|Disable sorting within a list by setting to `false`|
+|Handle|String|""|1.0|The CSS class you want the sortable to respect as the drag handle|
+|Filter|String|""|1.0|The CSS class you want to use to identify elements that cannot be sorted or moved|
+|ForceFallback|Boolean|true|1.0|Enable HTML5 drag and drop by setting to `false`|
 
 ### Events
 
