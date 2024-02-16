@@ -1,8 +1,9 @@
 @using BlazorSortableList
+@using Microsoft.Fast.Components.FluentUI
 
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Simple List</h1>
-    <Tabs CodeContent="@codeContent">
+    @* <Tabs CodeContent="@codeContent1">
         <ExampleContent>
             <div class="columns">
                 <div class="column is-half">
@@ -17,11 +18,49 @@
             </div>
         </ExampleContent>
     </Tabs>
+    <br> *@
+    <FluentTabs >
+        <FluentTab Label="Example"  Id="tab-1">
+            <div class="columns">
+                <div class="column is-half">
+                    <SortableList Id="simpleList" Items="items" OnUpdate="@SortList" Context="item">
+                        <SortableItemTemplate>
+                            <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
+                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>
+        </FluentTab>
+        <FluentTab Label="Code" Id="tab-2">
+            <pre>@codeContent1</pre>
+        </FluentTab>
+        <FluentTab Label="Example V1.1" Id="tab-3">
+            <div class="columns">
+                <div class="column is-half">
+                    <SortableList Items="items" Context="item" DefaultSort>
+                        <SortableItemTemplate>
+                            <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
+                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>
+        </FluentTab>
+        <FluentTab Label="Code V1.1" Id="tab-4">
+            <pre>@codeContent2</pre>
+        </FluentTab>
+
+    </FluentTabs>
+
+
 </div>
 
 @code {
 
-    private string codeContent = $@"
+    private string codeContent1 = $@"
     <SortableList Id=""sortable"" Items=""items"" OnUpdate=""@SortList"" Context=""item"">
         <SortableItemTemplate>
             <div class=""has-border has-background-white has-cursor-pointer"">
@@ -36,6 +75,8 @@
             public int Id {{ get; set; }}
             public string Name {{ get; set; }}
         }}
+
+        public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item {{ Id = i, Name = $""Item {{i}}"" }}).ToList();
 
         private void SortList((int oldIndex, int newIndex) indices)
         {{
@@ -57,6 +98,24 @@
 
             StateHasChanged();
         }}
+    }}";
+
+    private string codeContent2 = @"
+    <SortableList Items=""items"" Context=""item"" DefaultSort>
+        <SortableItemTemplate>
+            <div class=""card has-border-light has-background-blazor has-text-white has-cursor-grab"">
+                <p class=""is-size-4 p-2 ml-4"">@item.Name</p>
+            </div>
+        </SortableItemTemplate>
+    </SortableList>
+    @code {{
+        public class Item
+        {{
+            public int Id {{ get; set; }}
+            public string Name {{ get; set; }}
+        }}
+        public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList();
+
     }}";
 
     public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();

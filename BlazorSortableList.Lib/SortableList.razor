@@ -54,6 +54,9 @@
     [Parameter]
     public bool ForceFallback { get; set; } = true;
 
+    [Parameter]
+    public bool DefaultSort { get; set; }
+
     private DotNetObjectReference<SortableList<T>>? selfReference;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -69,8 +72,19 @@
     [JSInvokable]
     public void OnUpdateJS(int oldIndex, int newIndex)
     {
-        // invoke the OnUpdate event passing in the oldIndex and the newIndex
-        OnUpdate.InvokeAsync((oldIndex, newIndex));
+        if (OnUpdate.HasDelegate)
+        {
+            if (DefaultSort)
+            {
+                throw new ArgumentException($"It must be defined as either {{nameof(OnUpdate)}} or {{nameof(DefaultSort)}}, but not both together.");
+            }
+            // invoke the OnUpdate event passing in the oldIndex and the newIndex
+            OnUpdate.InvokeAsync((oldIndex, newIndex));
+        }
+        else if (DefaultSort)
+        {
+            SortList(oldIndex, newIndex);
+        }
     }
 
     [JSInvokable]
@@ -81,4 +95,26 @@
     }
 
     public void Dispose() => selfReference?.Dispose();
+
+    private void SortList(int oldIndex, int newIndex)
+    {
+
+        var items = Items;
+        if (items != null)
+        {
+            var itemToMove = items[oldIndex];
+            items.RemoveAt(oldIndex);
+
+            if (newIndex < items.Count)
+            {
+                items.Insert(newIndex, itemToMove);
+            }
+            else
+            {
+                items.Add(itemToMove);
+            }
+
+            StateHasChanged();
+        }
+    }
 }
