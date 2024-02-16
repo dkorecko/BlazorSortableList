@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SolutionItems", "_SolutionItems", "{99D07580-0BAE-48E3-AF82-DF3E3B5480D2}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
-		.github\workflows\azure-static-web-apps-alex-deploy-public.yml = .github\workflows\azure-static-web-apps-alex-deploy-public.yml
 		README.MD = README.MD
 	EndProjectSection
 EndProject
