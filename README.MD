@@ -2,9 +2,9 @@
 ## Overview
 An implementation of the [SortableJS library](https://sortablejs.github.io/Sortable/) for Blazor. This example shows you how to reorder elements within a list using drag and drop.
 
-[View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
-[View Demos .NET8 server prerendering](https://blazorsortablelistdemoapp2024.azurewebsites.net/)
-[View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
+- [View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
+- [View Demos .NET8 server prerendering](https://blazorsortablelistdemoapp2024.azurewebsites.net/)
+- [View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
 
 Great implementation, but I would like to make some changes:
 - extract package
