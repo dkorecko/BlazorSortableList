@@ -137,6 +137,7 @@ Here is an example of how to reorder your list when the OnUpdate is fired...
 ## Enhanced version
 
 From version 1.1 It is possible to use simplified code.
+
 *Razor*
 ```html
 <SortableList Items="items" Context="item" DefaultSort>
