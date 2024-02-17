@@ -1,5 +1,19 @@
 @using BlazorSortableList
-@using Microsoft.Fast.Components.FluentUI
+
+@using BlazorXTabs
+
+@* remove bootstrap borders *@
+<style>
+    .card {
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .card-header {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+</style>
 
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Simple List</h1>
@@ -17,10 +31,10 @@
                 </div>
             </div>
         </ExampleContent>
-    </Tabs>
-    <br> *@
-    <FluentTabs >
-        <FluentTab Label="Example"  Id="tab-1">
+    </Tabs>  *@
+    
+    <XTabs>
+        <XTab Title="Example">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Id="simpleList" Items="items" OnUpdate="@SortList" Context="item">
@@ -32,11 +46,11 @@
                     </SortableList>
                 </div>
             </div>
-        </FluentTab>
-        <FluentTab Label="Code" Id="tab-2">
+        </XTab>
+        <XTab Title="Code">
             <pre>@codeContent1</pre>
-        </FluentTab>
-        <FluentTab Label="Example V1.1" Id="tab-3">
+        </XTab>
+        <XTab Title="Example V1.1">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Items="items" Context="item" DefaultSort>
@@ -48,13 +62,11 @@
                     </SortableList>
                 </div>
             </div>
-        </FluentTab>
-        <FluentTab Label="Code V1.1" Id="tab-4">
+        </XTab>
+        <XTab Title="Code V1.1">
             <pre>@codeContent2</pre>
-        </FluentTab>
-
-    </FluentTabs>
-
+        </XTab>
+    </XTabs>
 
 </div>
 

@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorSortableList.DemoApp.Client\BlazorSortableList.DemoApp.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
+    <PackageReference Include="PSC.Blazor.Components.Tabs" Version="1.0.6" />
   </ItemGroup>
 
 </Project>
