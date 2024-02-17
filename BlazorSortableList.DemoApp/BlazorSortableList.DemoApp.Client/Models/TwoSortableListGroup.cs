@@ -1,5 +1,11 @@
 ﻿namespace BlazorSortableList.DemoApp.Client.Models;
 
+/// <summary>
+/// Class TwoSortableListGroup.
+/// Implements the <see cref="BlazorSortableList.SortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
+/// Simple protection from direct use. Need to implement empty virtual function
+/// </summary>
+/// <seealso cref="BlazorSortableList.SortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
 internal abstract class TwoSortableListGroup : SortableListGroup<Item>
 {
     private readonly Action _refreshComponent;
@@ -14,10 +20,6 @@ internal abstract class TwoSortableListGroup : SortableListGroup<Item>
         Id1 = id1;
         Id2 = id2;
     }
-
-    protected abstract void ListOneRemove(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2);
-
-    protected abstract void ListTwoRemove(int oldIndex, int newIndex, IList<Item> items2, IList<Item> items1);
 
     public virtual bool HandleRemove(string id, string group, int oldIndex, int newIndex)
     {
@@ -42,6 +44,38 @@ internal abstract class TwoSortableListGroup : SortableListGroup<Item>
 
     public virtual bool HandleUpdate(string id, string group, int oldIndex, int newIndex)
     {
+        var items1 = GetModel(Id1)?.Items;
+        var items2 = GetModel(Id2)?.Items;
+        if (items1 != null && items2 != null)
+        {
+            if (id == Id1)
+            {
+                ListOneUpdate(oldIndex, newIndex, items1, items2);
+            }
+            else if (id == Id2)
+            {
+                ListTwoUpdate(oldIndex, newIndex, items1, items2);
+            }
+
+            _refreshComponent();
+        }
+
         return false;
+    }
+
+    protected virtual void ListOneRemove(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    {
+    }
+
+    protected virtual void ListOneUpdate(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    {
+    }
+
+    protected virtual void ListTwoRemove(int oldIndex, int newIndex, IList<Item> items2, IList<Item> items1)
+    {
+    }
+
+    protected virtual void ListTwoUpdate(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    {
     }
 }
