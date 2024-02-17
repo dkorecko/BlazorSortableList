@@ -1,4 +1,5 @@
 @using BlazorSortableList
+@using BlazorSortableList.DemoApp.Client.Models
 
 @using BlazorXTabs
 
@@ -37,7 +38,7 @@
         <XTab Title="Example">
             <div class="columns">
                 <div class="column is-half">
-                    <SortableList Id="simpleList" Items="items" OnUpdate="@SortList" Context="item">
+                    <SortableList Id="simpleList" Items="@items" OnUpdate="@SortList" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
                                 <p class="is-size-4 p-2 ml-4">@item.Name</p>
@@ -53,7 +54,7 @@
         <XTab Title="Example V1.1">
             <div class="columns">
                 <div class="column is-half">
-                    <SortableList Items="items" Context="item" DefaultSort>
+                    <SortableList Items="@items" Context="item" DefaultSort>
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
                                 <p class="is-size-4 p-2 ml-4">@item.Name</p>
@@ -66,11 +67,30 @@
         <XTab Title="Code V1.1">
             <pre>@codeContent2</pre>
         </XTab>
+        
+        <XTab Title="Example V1.2">
+            <div class="columns">
+                <div class="column is-half">
+                    <SortableList Id="@ListId" GroupModel="@_group" Context="item">
+                        <SortableItemTemplate>
+                            <div class="card has-border-light has-background-blazor1 has-cursor-grab">
+                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>
+        </XTab>
+        <XTab Title="Code V1.2">
+            <pre>@codeContent3</pre>
+        </XTab>
     </XTabs>
 
 </div>
 
 @code {
+
+    private const string ListId = "ExampleListId";
 
     private string codeContent1 = $@"
     <SortableList Id=""sortable"" Items=""items"" OnUpdate=""@SortList"" Context=""item"">
@@ -113,12 +133,12 @@
     }}";
 
     private string codeContent2 = @"
-    <SortableList Items=""items"" Context=""item"" DefaultSort>
-        <SortableItemTemplate>
-            <div class=""card has-border-light has-background-blazor has-text-white has-cursor-grab"">
-                <p class=""is-size-4 p-2 ml-4"">@item.Name</p>
-            </div>
-        </SortableItemTemplate>
+     <SortableList Id=""@ListId"" GroupModel=""@_group"" Context=""item"">
+       <SortableItemTemplate>
+         <div class=""card has-border-light has-background-blazor has-text-white has-cursor-grab"">
+            <p class=""is-size-4 p-2 ml-4"">@item.Name</p>
+         </div>
+       </SortableItemTemplate>
     </SortableList>
     @code {{
         public class Item
@@ -130,8 +150,53 @@
 
     }}";
 
-    public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+    private string codeContent3 = @"
+    <SortableList Model=""@model"" Context=""item"">
+       <SortableItemTemplate>
+         <div class=""card has-border-light has-background-blazor has-text-white has-cursor-grab"">
+             <p class=""is-size-4 p-2 ml-4"">@item.Name</p>
+         </div>
+       </SortableItemTemplate>
+    </SortableList>
+    @code {{
+        private const string ListId = ""ExampleListId"";
+        public class Item
+        {{
+            public int Id {{ get; set; }}
+            public string Name {{ get; set; }}
+        }}
+        private List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList();
 
+        private SingleSortableListGroup _group;
+
+        // Variant with independent items
+        // SingleSortableListGroup _group = new SingleSortableListGroup(
+        //     ListId,
+        //     new SortableListModel(Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList()));
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            _group = new SingleSortableListGroup(ListId, new SortableListModel(items));
+        }
+    }}";
+
+    private List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+    private SingleSortableListGroup _group;
+
+    // Variant with independent items
+    // SingleSortableListGroup _group = new SingleSortableListGroup(
+    //     ListId,
+    //     new SortableListModel(Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList()));
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        _group = new SingleSortableListGroup(ListId, new SortableListModel(items));
+    }
 
     private void SortList((int oldIndex, int newIndex) indices)
     {

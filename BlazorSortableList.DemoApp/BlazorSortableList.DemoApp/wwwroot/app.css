@@ -47,6 +47,9 @@ h1:focus {
 .has-background-blazor {
     background-color: #592b8f !important;
 }
+.has-background-blazor1 {
+    background-color: #62BAB6 !important;
+}
 
 .has-cursor-grab {
     cursor: grab;

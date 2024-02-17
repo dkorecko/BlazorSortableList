@@ -7,12 +7,19 @@
 @typeparam T
 
 <div id="@Id">
-    @foreach (var item in Items)
+    @if (Items != null)
     {
-        @if (SortableItemTemplate is not null)
+        @foreach (var item in Items)
         {
-            @SortableItemTemplate(item)
+            @if (SortableItemTemplate is not null)
+            {
+                @SortableItemTemplate(item)
+            }
         }
+    }
+    else
+    {
+        <div>Error: The list of items is null</div>
     }
 </div>
 
@@ -22,7 +29,10 @@
     public RenderFragment<T>? SortableItemTemplate { get; set; }
 
     [Parameter, AllowNull]
-    public List<T> Items { get; set; }
+    public IList<T> Items { get; set; }
+
+    [Parameter]
+    public ISortableListGroup<T>? GroupModel { get; set; }
 
     [Parameter]
     public EventCallback<(int oldIndex, int newIndex)> OnUpdate { get; set; }
@@ -31,7 +41,7 @@
     public EventCallback<(int oldIndex, int newIndex)> OnRemove { get; set; }
 
     [Parameter]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public  string Id { get; set; } = Guid.NewGuid().ToString();
 
     [Parameter]
     public string Group { get; set; } = Guid.NewGuid().ToString();
@@ -59,6 +69,44 @@
 
     private DotNetObjectReference<SortableList<T>>? selfReference;
 
+    private ISortableListHandler? _sortableListHandler;
+
+    /// <summary>
+    /// Method invoked when the component has received parameters from its parent in
+    /// the render tree, and the incoming values have been assigned to properties.
+    /// </summary>
+    /// <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing any asynchronous operation.</returns>
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        _sortableListHandler = GroupModel as ISortableListHandler;
+
+        if (GroupModel != null)
+        {
+            ISortableListModel<T>? model = GroupModel.GetModel(Id);
+            if (model != null)
+            {
+                Group = model.Group;
+                Items = model.Items;
+                var settings = model.Settings;
+
+                if (settings != null)
+                {
+                    if (settings.CloneMode)
+                    {
+                        Pull = "clone";
+                    }
+
+                    Put = settings.AllowDrop;
+                    Sort = settings.AllowReorder;
+                    Handle = settings.CssForDragHandle;
+                    Filter = settings.CssForDisabledItem;
+                    ForceFallback = !settings.AllowHtml5DragAndDrop;
+                }
+            }
+        }
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -72,26 +120,46 @@
     [JSInvokable]
     public void OnUpdateJS(int oldIndex, int newIndex)
     {
-        if (OnUpdate.HasDelegate)
+        if (_sortableListHandler != null)
         {
-            if (DefaultSort)
+            if (_sortableListHandler.HandleUpdate(Id, Group, oldIndex, newIndex))
             {
-                throw new ArgumentException($"It must be defined as either {{nameof(OnUpdate)}} or {{nameof(DefaultSort)}}, but not both together.");
+                StateHasChanged();
             }
-            // invoke the OnUpdate event passing in the oldIndex and the newIndex
-            OnUpdate.InvokeAsync((oldIndex, newIndex));
         }
-        else if (DefaultSort)
+        else
         {
-            SortList(oldIndex, newIndex);
+            if (OnUpdate.HasDelegate)
+            {
+                if (DefaultSort)
+                {
+                    throw new ArgumentException($"It must be defined as either {{nameof(OnUpdate)}} or {{nameof(DefaultSort)}}, but not both together.");
+                }
+                // invoke the OnUpdate event passing in the oldIndex and the newIndex
+                OnUpdate.InvokeAsync((oldIndex, newIndex));
+            }
+            else if (DefaultSort)
+            {
+                SortList(oldIndex, newIndex);
+            }
         }
     }
 
     [JSInvokable]
     public void OnRemoveJS(int oldIndex, int newIndex)
     {
-        // remove the item from the list
-        OnRemove.InvokeAsync((oldIndex, newIndex));
+        if (_sortableListHandler != null)
+        {
+            if (_sortableListHandler.HandleRemove(Id, Group, oldIndex, newIndex))
+            {
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            // remove the item from the list
+            OnRemove.InvokeAsync((oldIndex, newIndex));
+        }
     }
 
     public void Dispose() => selfReference?.Dispose();
