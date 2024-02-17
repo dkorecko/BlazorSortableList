@@ -136,6 +136,7 @@ Here is an example of how to reorder your list when the OnUpdate is fired...
 
 ## Enhanced version
 
+### Version 1.1
 From version 1.1 It is possible to use simplified code.
 
 *Razor*
@@ -150,6 +151,9 @@ From version 1.1 It is possible to use simplified code.
 ```
 No additional C# code required.
 
+### Version 1.2
+I am trying to move all the logic to external classes because I want to use the dumb UI.
+
 ## History
-V1.1 - added DefaultSort parameter
+V1.1 - added DefaultSort parameter  
 V1.0 - orignal component
