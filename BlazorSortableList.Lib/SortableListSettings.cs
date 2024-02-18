@@ -28,7 +28,7 @@ public class SortableListSettings
     /// Gets or sets the CSS class name to display the drag handle of the list item.
     /// Note: Similar to the Handle parameter
     /// </summary>
-    /// <value>The CSS for drag handle.</value>
+    /// <value>The CSS for drag handle with leading point</value>
     public string CssForDragHandle { get; set; } = String.Empty;
 
     /// <summary>

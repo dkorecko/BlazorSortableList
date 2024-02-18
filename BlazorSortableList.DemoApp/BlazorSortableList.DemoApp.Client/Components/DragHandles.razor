@@ -1,7 +1,10 @@
+@using BlazorXTabs
+@using BlazorSortableList.DemoApp.Client.Models
+
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Drag Handles</h1>
     <p>Drag handles are specified by the `Handle` property which specifies which CSS class denotes the drag handle. In the example below, the items can only be sorted using the drag handle itself.</p>
-    <Tabs CodeContent="@codeContent">
+    @* <Tabs CodeContent="@codeContent">
         <ExampleContent>
             <div class="columns">
                 <div class="column is-half">
@@ -24,12 +27,60 @@
                 </div>
             </div>
         </ExampleContent>
-    </Tabs>
+    </Tabs> *@
+    
+      <XTabs>
+        <XTab Title="Example">
+            <div class="columns">
+                <div class="column is-half">
+                    <SortableList Id="dragHandles123" Handle=".drag-handle" Items="items" OnUpdate="@SortList" Context="item">
+                        <SortableItemTemplate>
+                            <div class="is-flex is-align-items-center">
+                                <div class="has-cursor-grab">
+                                    <div class="drag-handle mr-4">
+                                        <i class="is-size-4 fas fa-grip-vertical"></i>
+                                    </div>
+                                </div>
+                                <div class="is-flex-grow-1">
+                                    <div class=" card has-border-light has-background-blazor has-text-white">
+                                        <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>
+        </XTab>
+        <XTab Title="Code">
+            <pre>@codeContent1</pre>
+        </XTab>
+        <XTab Title="Example V1.2">
+            <div class="columns">
+                <div class="column">
+                    <SortableList Id="@ListId3"  GroupModel="@_group" Context="item">
+                        <SortableItemTemplate>
+                            <div class=" card has-border-light has-background-blazor1">
+                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>                  
+        </XTab>
+        <XTab Title="Code V1.2">
+            <pre>@codeContent2</pre>
+        </XTab>
+        
+    </XTabs>
 </div>
 
 @code {
+    private const string ListId = "SharedListHandle1";
+    private const string ListId3 = "dragHandles";
+    private const string GroupId = "CommonGroupHandle";
 
-    private string codeContent = @"
+    private string codeContent1 = @"
     <SortableList Id=""dragHandles"" Handle="".drag-handle"" Items=""items"" OnUpdate=""@SortList"" Context=""item"">
         <SortableItemTemplate>
             <div class=""is-flex is-align-items-center"">
@@ -47,9 +98,9 @@
         </SortableItemTemplate>
     </SortableList>
 
-    @code {{
+    @code {
         private void SortList((int oldIndex, int newIndex) indices)
-        {{
+        {
             // deconstruct the tuple
             var (oldIndex, newIndex) = indices;
 
@@ -58,19 +109,32 @@
             items.RemoveAt(oldIndex);
 
             if (newIndex < items.Count)
-            {{
+            {
                 items.Insert(newIndex, itemToMove);
-            }}
+            }
             else
-            {{
+            {
                 items.Add(itemToMove);
-            }}
+            }
 
             StateHasChanged();
-        }}
-    }}";
+        }
+    }";
 
+    private string codeContent2 = @"
+    Doesn't work now
+    ";
     public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+    private SingleSortableListGroup _group;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var settings = new SortableListSettings() { CssForDragHandle = ".drag-handle" };
+        _group = new SingleSortableListGroup(ListId3, new SortableListModel(items){Settings = settings});
+    }
 
     private void SortList((int oldIndex, int newIndex) indices)
     {
