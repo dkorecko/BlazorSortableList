@@ -16,7 +16,7 @@ internal class DisableSortingListGroup : TwoSortableListGroup, ISortableListHand
         items2.Insert(newIndex, clone);
     }
 
-    protected override void ListTwoUpdate(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    protected override void ListTwoUpdate(int oldIndex, int newIndex, IList<Item> items2)
     {
         var items = items2;
         var itemToMove = items[oldIndex];

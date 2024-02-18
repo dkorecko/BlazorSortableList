@@ -44,21 +44,24 @@ internal abstract class TwoSortableListGroup : SortableListGroup<Item>
 
     public virtual bool HandleUpdate(string id, string group, int oldIndex, int newIndex)
     {
-        var items1 = GetModel(Id1)?.Items;
-        var items2 = GetModel(Id2)?.Items;
-        if (items1 != null && items2 != null)
+        if (id == Id1)
         {
-            if (id == Id1)
+            var items1 = GetModel(Id1)?.Items;
+            if (items1 != null)
             {
-                ListOneUpdate(oldIndex, newIndex, items1, items2);
+                ListOneUpdate(oldIndex, newIndex, items1);
             }
-            else if (id == Id2)
-            {
-                ListTwoUpdate(oldIndex, newIndex, items1, items2);
-            }
-
-            _refreshComponent();
         }
+        else if (id == Id2)
+        {
+            var items2 = GetModel(Id2)?.Items;
+            if (items2 != null)
+            {
+                ListTwoUpdate(oldIndex, newIndex, items2);
+            }
+        }
+
+        _refreshComponent();
 
         return false;
     }
@@ -67,7 +70,7 @@ internal abstract class TwoSortableListGroup : SortableListGroup<Item>
     {
     }
 
-    protected virtual void ListOneUpdate(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    protected virtual void ListOneUpdate(int oldIndex, int newIndex, IList<Item> items1)
     {
     }
 
@@ -75,7 +78,7 @@ internal abstract class TwoSortableListGroup : SortableListGroup<Item>
     {
     }
 
-    protected virtual void ListTwoUpdate(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    protected virtual void ListTwoUpdate(int oldIndex, int newIndex, IList<Item> items2)
     {
     }
 }
