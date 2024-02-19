@@ -4,11 +4,11 @@
 /// <summary>
 /// Class TwoSortableListGroup.
 /// Implements the <see cref="BlazorSortableList.SortableListGroup{T}" />
-/// Abstract class is simple protection against direct use. You need to override empty virtual function
+/// Default implementation sorts list1 and list2, and moves items from list1 to list2 and vice versa.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <seealso cref="BlazorSortableList.SortableListGroup{T}" />
-public abstract class TwoSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
+public class TwoSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
 {
     private readonly Action _refreshComponent;
     public string Id1 { get; }
@@ -69,17 +69,50 @@ public abstract class TwoSortableListGroup<T> : SortableListGroup<T>, ISortableL
 
     protected virtual void ListOneRemove(int oldIndex, int newIndex, IList<T> items1, IList<T> items2)
     {
+        // get the item at the old index in list 1
+        var item = items1[oldIndex];
+
+        // add it to the new index in list 2
+        items2.Insert(newIndex, item);
+
+        // remove the item from the old index in list 1
+        items1.Remove(items1[oldIndex]);
     }
 
     protected virtual void ListOneUpdate(int oldIndex, int newIndex, IList<T> items1)
     {
+        SortList(oldIndex, newIndex, items1);
     }
 
     protected virtual void ListTwoRemove(int oldIndex, int newIndex, IList<T> items2, IList<T> items1)
     {
+        // get the item at the old index in list 2
+        var item = items2[oldIndex];
+
+        // add it to the new index in list 1
+        items1.Insert(newIndex, item);
+
+        // remove the item from the old index in list 2
+        items2.Remove(items2[oldIndex]);
     }
 
     protected virtual void ListTwoUpdate(int oldIndex, int newIndex, IList<T> items2)
     {
+        SortList(oldIndex, newIndex, items2);
+    }
+
+    private static void SortList(int oldIndex, int newIndex, IList<T> items)
+    {
+        var itemToMove = items[oldIndex];
+        items.RemoveAt(oldIndex);
+
+        if (newIndex < items.Count)
+        {
+            items.Insert(newIndex, itemToMove);
+        }
+        else
+        {
+            items.Add(itemToMove);
+        }
     }
 }
