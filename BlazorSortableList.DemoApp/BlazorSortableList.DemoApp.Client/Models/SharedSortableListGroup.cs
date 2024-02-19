@@ -1,6 +1,6 @@
 ﻿namespace BlazorSortableList.DemoApp.Client.Models;
 
-internal class SharedSortableListGroup : TwoSortableListGroup<Item>, ISortableListHandler
+internal class SharedSortableListGroup : TwoSortableListGroup<Item>
 {
     public SharedSortableListGroup(string id1, string id2, Action refreshComponent)
         : base(id1, id2, refreshComponent)

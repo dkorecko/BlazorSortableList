@@ -8,7 +8,7 @@
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <seealso cref="BlazorSortableList.SortableListGroup{T}" />
-public abstract class TwoSortableListGroup<T> : SortableListGroup<T>
+public abstract class TwoSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
 {
     private readonly Action _refreshComponent;
     public string Id1 { get; }

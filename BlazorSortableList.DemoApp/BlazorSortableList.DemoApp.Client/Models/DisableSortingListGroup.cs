@@ -1,6 +1,6 @@
 ﻿namespace BlazorSortableList.DemoApp.Client.Models;
 
-internal class DisableSortingListGroup : TwoSortableListGroup<Item>, ISortableListHandler
+internal class DisableSortingListGroup : TwoSortableListGroup<Item>
 {
     public DisableSortingListGroup(string id1, string id2, Action refreshComponent)
         : base(id1, id2, refreshComponent)
