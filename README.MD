@@ -57,15 +57,43 @@ dotnet add package BlazorSortableList
 <script type="module" src="_content/BlazorSortableList/SortableList.razor.js"></script>
  ```
 
-4. Add the SortableList component to your page and define the SortableItemTemplate...
+4a. [From version 1.2](https://github.com/AlexNek/BlazorSortableList#version-12), you can move all the logic out of the component and use the standard implementation of the logic (`SingleSortableListGroup`).
 
-        <SortableList Id="sortable" Items="items" OnUpdate="@SortList" Context="item">
-            <SortableItemTemplate>
-                <div>
-                    <p>@item.Name</p>
-                </div>
-            </SortableItemTemplate>
-        </SortableList>
+*Razor*
+```html
+@using BlazorSortableList
+
+<SortableList Id="@ListId" GroupModel="@_group" Context="item">
+    <SortableItemTemplate>
+       <p>@item.Name</p>
+    </SortableItemTemplate>
+</SortableList>
+```
+*Code behind*
+```csharp
+private const string ListId = "sortable";
+
+private SingleSortableListGroup<Item> _group;
+
+protected override async Task OnInitializedAsync()
+{
+      await base.OnInitializedAsync();
+
+      _group = new SingleSortableListGroup<Item>(ListId, new SortableListModel<Item>(items));
+}
+```
+
+4b. Version 1.0 and 1.1 - Add the SortableList component to your page and define the SortableItemTemplate...
+```html
+@using BlazorSortableList
+<SortableList Id="sortable" Items="items" OnUpdate="@SortList" Context="item">
+     <SortableItemTemplate>
+         <div>
+             <p>@item.Name</p>
+         </div>
+     </SortableItemTemplate>
+</SortableList>
+```
 
  - ***Items***: The list of items to be displayed. Can be of any type.
  - ***OnUpdate***: The method to be called when the list is updated.
