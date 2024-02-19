@@ -100,7 +100,7 @@ namespace BlazorSortableList
                 selfReference = DotNetObjectReference.Create(this);
                 var module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorSortableList/SortableList.razor.js");
 
-                await JS.InvokeVoidAsync("console.log", $"***id:{Id}, group:{Group},pull: {Pull},put:{Put},sort:{Sort}, handle:{Handle}, filter:{Filter}, forceFallback:{ForceFallback}");
+                //await JS.InvokeVoidAsync("console.log", $"***id:{Id}, group:{Group},pull: {Pull},put:{Put},sort:{Sort}, handle:{Handle}, filter:{Filter}, forceFallback:{ForceFallback}");
                 await module.InvokeAsync<string>("init", Id, Group, Pull, Put, Sort, Handle, Filter, selfReference, ForceFallback);
             }
         }
