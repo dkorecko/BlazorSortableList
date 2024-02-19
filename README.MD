@@ -178,7 +178,7 @@ The main idea is that all lists in the group use the same "data" class. This cla
 ![image](docu/images/BlayzorSortableList-cd2.png)  
 *fig.3*
 
-You can now compare 2 implementations, old and new:
+You can now compare 2 implementations, old and new:  
 *Razor*
 ```html
 <SortableList Id="@ListId" GroupModel="@_group" Context="item">
