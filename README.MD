@@ -90,7 +90,7 @@ All properties are optional and have default values.
 |Filter|String|""|1.0|The CSS class you want to use to identify elements that cannot be sorted or moved|
 |ForceFallback|Boolean|true|1.0|Enable HTML5 drag and drop by setting to `false`|
 |DefaultSort|Boolean|false|1.1|Enable simplified use by setting to `true`.|
-|GroupModel|ISortableListGroup<T>|false|1.2|[Data management class](#Version 1.2)|
+|GroupModel|ISortableListGroup<T>|false|1.2|[Data management class](https://github.com/AlexNek/BlazorSortableList#version-12)|
 
 > **Note:** Pay attention to the fact that you have to declare the handle in your code. You can only drag an item using the handle. 
 > For this example, you need to set `Handle` to ".drag-handle". 
@@ -169,11 +169,11 @@ No additional C# code required.
 I am trying to move all the logic to external classes because I want to use the dumb UI.
 
 The main idea is that all lists in the group use the same "data" class. This class received all notifications and manipulated the real data elements (fig.1 - custom sorting group, fig.3 SharedSortableListGroup). Each list must have its own settings. Each list must have its own settings. Settings and data (fig.1 - SortableListModel) are accessible via list id. Make sure you use the same id for the list control and the data insert.
-![image](docu/images/BlayzorSortableList-enh.png)
+![image](docu/images/BlayzorSortableList-enh.png)  
 *fig.1*
-![image](docu/images/BlayzorSortableList-cd.png)
+![image](docu/images/BlayzorSortableList-cd.png)  
 *fig.2*
-![image](docu/images/BlayzorSortableList-cd2.png)
+![image](docu/images/BlayzorSortableList-cd2.png)  
 *fig.3*
 
 You can now compare 2 implementations, old and new:
