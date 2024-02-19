@@ -1,15 +1,16 @@
 ﻿namespace BlazorSortableList;
 
+
 /// <summary>
 /// Class TwoSortableListGroup.
-/// Implements the <see cref="BlazorSortableList.SortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
-/// Simple protection from direct use. Need to implement empty virtual function
+/// Implements the <see cref="BlazorSortableList.SortableListGroup{T}" />
+/// Abstract class is simple protection against direct use. You need to override empty virtual function
 /// </summary>
-/// <seealso cref="BlazorSortableList.SortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
+/// <typeparam name="T"></typeparam>
+/// <seealso cref="BlazorSortableList.SortableListGroup{T}" />
 public abstract class TwoSortableListGroup<T> : SortableListGroup<T>
 {
     private readonly Action _refreshComponent;
-
     public string Id1 { get; }
 
     public string Id2 { get; }

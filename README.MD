@@ -91,6 +91,16 @@ All properties are optional and have default values.
 |ForceFallback|Boolean|true|1.0|Enable HTML5 drag and drop by setting to `false`|
 |DefaultSort|Boolean|false|1.1|Enable simplified use by setting to `true`.|
 
+> **Note:** pay attentsion that you need to declare handle in your code
+
+  ``` html
+    <div class=""has-cursor-grab"">
+        <div class=""drag-handle mr-4"">
+            <i class=""is-size-4 fas fa-grip-vertical""></i>
+        </div>
+    </div>
+  ```
+
 ### Events
 
 `OnUpdate` (Optional): The method to be called when the list is updated. You can name this method whatever you like, but it expects a `oldIndex` and `newIndex` parameters when the drag and drop occurs.
