@@ -58,10 +58,19 @@
         <XTab Title="Example V1.2">
             <div class="columns">
                 <div class="column">
-                    <SortableList Id="@ListId3"  GroupModel="@_group" Context="item">
+                    <SortableList Id="@ListId"  GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
-                            <div class=" card has-border-light has-background-blazor1">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                            <div class="is-flex is-align-items-center">
+                                <div class="has-cursor-grab">
+                                    <div class="drag-handle mr-4">
+                                        <i class="is-size-4 fas fa-grip-vertical"></i>
+                                    </div>
+                                </div>
+                                <div class="is-flex-grow-1">
+                                    <div class=" card has-border-light has-background-blazor1">
+                                        <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                    </div>
+                                </div>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
@@ -71,15 +80,12 @@
         <XTab Title="Code V1.2">
             <pre>@codeContent2</pre>
         </XTab>
-        
     </XTabs>
 </div>
 
 @code {
     private const string ListId = "SharedListHandle1";
-    private const string ListId3 = "dragHandles";
-    private const string GroupId = "CommonGroupHandle";
-
+   
     private string codeContent1 = @"
     <SortableList Id=""dragHandles"" Handle="".drag-handle"" Items=""items"" OnUpdate=""@SortList"" Context=""item"">
         <SortableItemTemplate>
@@ -122,7 +128,34 @@
     }";
 
     private string codeContent2 = @"
-    Doesn't work now
+    <SortableList Id=""@ListId""  GroupModel=""@_group"" Context=""item"">
+        <SortableItemTemplate>
+            <div class=""is-flex is-align-items-center"">
+                <div class=""has-cursor-grab"">
+                    <div class=""drag-handle mr-4"">
+                        <i class=""is-size-4 fas fa-grip-vertical""></i>
+                    </div>
+                </div>
+                <div class=""is-flex-grow-1"">
+                    <div class="" card has-border-light has-background-blazor1"">
+                        <p class=""is-size-4 p-2 ml-4"">@item.Name</p>
+                    </div>
+                </div>
+            </div>
+        </SortableItemTemplate>
+    </SortableList>
+    @code{
+        private const string ListId = ""SharedListHandle1"";
+        private SingleSortableListGroup _group;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            var settings = new SortableListSettings() { CssForDragHandle = "".drag-handle"" };
+            _group = new SingleSortableListGroup(ListId, new SortableListModel(items){Settings = settings});
+        }
+    }
     ";
     public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
 
@@ -133,7 +166,7 @@
         await base.OnInitializedAsync();
 
         var settings = new SortableListSettings() { CssForDragHandle = ".drag-handle" };
-        _group = new SingleSortableListGroup(ListId3, new SortableListModel(items){Settings = settings});
+        _group = new SingleSortableListGroup(ListId, new SortableListModel(items){Settings = settings});
     }
 
     private void SortList((int oldIndex, int newIndex) indices)
