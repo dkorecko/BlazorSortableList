@@ -90,13 +90,15 @@ All properties are optional and have default values.
 |Filter|String|""|1.0|The CSS class you want to use to identify elements that cannot be sorted or moved|
 |ForceFallback|Boolean|true|1.0|Enable HTML5 drag and drop by setting to `false`|
 |DefaultSort|Boolean|false|1.1|Enable simplified use by setting to `true`.|
+|GroupModel|ISortableListGroup<T>|false|1.2|[Data management class](#Version 1.2)|
 
-> **Note:** pay attentsion that you need to declare handle in your code
+> **Note:** Pay attention to the fact that you have to declare the handle in your code. You can only drag an item using the handle. 
+> For this example, you need to set `Handle` to ".drag-handle". 
 
   ``` html
-    <div class=""has-cursor-grab"">
-        <div class=""drag-handle mr-4"">
-            <i class=""is-size-4 fas fa-grip-vertical""></i>
+    <div class="has-cursor-grab">
+        <div class="drag-handle mr-4">
+            <i class="is-size-4 fas fa-grip-vertical"></i>
         </div>
     </div>
   ```
@@ -123,8 +125,10 @@ Here is an example of how to reorder your list when the OnUpdate is fired...
 ```
 *C#*
 ```csharp
-    private void SortList((int oldIndex, int newIndex) indices)
-    {
+private List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+private void SortList((int oldIndex, int newIndex) indices)
+{
         var (oldIndex, newIndex) = indices;
 
         var items = this.items;
@@ -141,7 +145,7 @@ Here is an example of how to reorder your list when the OnUpdate is fired...
         }
 
         StateHasChanged();
-    }
+}
 ```
 
 ## Enhanced version
@@ -164,6 +168,70 @@ No additional C# code required.
 ### Version 1.2
 I am trying to move all the logic to external classes because I want to use the dumb UI.
 
+The main idea is that all lists in the group use the same "data" class. This class received all notifications and manipulated the real data elements (fig.1 - custom sorting group, fig.3 SharedSortableListGroup). Each list must have its own settings. Each list must have its own settings. Settings and data (fig.1 - SortableListModel) are accessible via list id. Make sure you use the same id for the list control and the data insert.
+![image](docu/images/BlayzorSortableList-enh.png)
+*fig.1*
+![image](docu/images/BlayzorSortableList-cd.png)
+*fig.2*
+![image](docu/images/BlayzorSortableList-cd2.png)
+*fig.3*
+
+You can now compare 2 implementations, old and new:
+*Razor*
+```html
+<SortableList Id="@ListId" GroupModel="@_group" Context="item">
+    <SortableItemTemplate>
+        <div class="card has-border-light has-background-blazor1 has-cursor-grab">
+            <p class="is-size-4 p-2 ml-4">@item.Name</p>
+        </div>
+    </SortableItemTemplate>
+</SortableList>
+```
+*C#*
+```csharp
+private const string ListId = "ExampleListId";
+private List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+private SingleSortableListGroup<Item> _group;
+
+protected override async Task OnInitializedAsync()
+{
+      await base.OnInitializedAsync();
+
+      _group = new SingleSortableListGroup<Item>(ListId, new SortableListModel<Item>(items));
+}
+```
+There are two default generic implementations, `SingleSortableListGroup` and `TwoSortableListGroup`.
+Both implement standard operations for single list and group of two lists (see demo application for details).
+
+#### Properties of the `SortableListSettings` Class
+
+|Name| Similar name in Component | Type | Default|Ver.|Description|
+|---|------|------|--------|---|-----------|
+|CloneMode|Pull|Boolean|false|1.2|Used when you want to clone elments into a list instead of moving them. |
+|AllowDrop|Put|Boolean|true|1.2|Set to false to disable dropping from another list onto the current list|
+|AllowReorder|Sort|Boolean|true|1.2|Disable sorting within a list by setting to `false`|
+|CssForDragHandle|Handle|String|""|1.2|The CSS class you want the sortable to respect as the drag handle|
+|CssForDisabledItem|Filter|String|""|1.2|The CSS class you want to use to identify elements that cannot be sorted or moved|
+|AllowHtml5DragAndDrop|ForceFallback|Boolean|false|1.2|Enable HTML5 drag and drop |
+
+Example of how to use the settings
+```csharp
+ClonedSortableListGroup _group;
+
+protected override async Task OnInitializedAsync()
+{
+    await base.OnInitializedAsync();
+
+    SortableListSettings settings = new SortableListSettings() { CloneMode = true };
+    _group = new ClonedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
+    _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings });
+    _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings });
+}
+
+```
+
 ## History
+V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
 V1.0 - orignal component
