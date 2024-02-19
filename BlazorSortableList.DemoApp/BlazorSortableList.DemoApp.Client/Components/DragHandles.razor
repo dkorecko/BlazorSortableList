@@ -146,27 +146,27 @@
     </SortableList>
     @code{
         private const string ListId = ""SharedListHandle1"";
-        private SingleSortableListGroup _group;
+        private SingleSortableListGroup<Item> _group;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
 
             var settings = new SortableListSettings() { CssForDragHandle = "".drag-handle"" };
-            _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
+            _group = new SingleSortableListGroup<Item>(ListId, new SortableListModel<Item>(items) { Settings = settings });
         }
     }
     ";
     public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
 
-    private SingleSortableListGroup _group;
+    private SingleSortableListGroup<Item> _group;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
         var settings = new SortableListSettings() { CssForDragHandle = ".drag-handle" };
-        _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
+        _group = new SingleSortableListGroup<Item>(ListId, new SortableListModel<Item>(items) { Settings = settings });
     }
 
     private void SortList((int oldIndex, int newIndex) indices)

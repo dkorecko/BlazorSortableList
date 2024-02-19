@@ -1,12 +1,12 @@
-﻿namespace BlazorSortableList.DemoApp.Client.Models;
+﻿namespace BlazorSortableList;
 
-internal class SingleSortableListGroup : SortableListGroup<Item>, ISortableListHandler
+public class SingleSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
 {
-    private readonly IList<Item> _items;
+    private readonly IList<T> _items;
 
-    public ISortableListModel<Item> Model { get; }
+    public ISortableListModel<T> Model { get; }
 
-    public SingleSortableListGroup(string id, ISortableListModel<Item> model)
+    public SingleSortableListGroup(string id, ISortableListModel<T> model)
 
     {
         AddModel(id, model);

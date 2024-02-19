@@ -103,7 +103,7 @@
     @code {
         public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList();
 
-        private SingleSortableListGroup _group;
+         private SingleSortableListGroup<Item> _group;
 
         protected override void OnInitialized()
         {
@@ -112,14 +112,14 @@
             items[randomIndex].Disabled = true;
 
             var settings = new SortableListSettings() { CssForDisabledItem = "".filtered"" };
-            _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
+            _group = new SingleSortableListGroup<Item>(ListId, new SortableListModel<Item>(items) { Settings = settings });
         }
     }
     ";
 
     public List<Item> items = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
 
-    private SingleSortableListGroup _group;
+    private SingleSortableListGroup<Item> _group;
 
     // on initialized, set a random item in the list to disabled
     protected override void OnInitialized()
@@ -129,7 +129,7 @@
         items[randomIndex].Disabled = true;
 
         var settings = new SortableListSettings() { CssForDisabledItem = ".filtered" };
-        _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
+        _group = new SingleSortableListGroup<Item>(ListId, new SortableListModel<Item>(items) { Settings = settings });
     }
 
 
