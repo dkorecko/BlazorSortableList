@@ -163,9 +163,9 @@
             var settings2 = new SortableListSettings() { AllowHtml5DragAndDrop = true};
 
             _group = new ForceFallbackListGroup(ListId1, ListId2, () => StateHasChanged());
-            _group.AddModel(ListId1, new SortableListModel(items1) { Settings = settings1 });
-            _group.AddModel(ListId2, new SortableListModel(items2) { Settings = settings2 });
-        }    
+            _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Settings = settings1 });
+            _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Settings = settings2 });
+        }
     }
     ";
 
@@ -183,8 +183,8 @@
         var settings2 = new SortableListSettings() { AllowHtml5DragAndDrop = true};
 
         _group = new ForceFallbackListGroup(ListId1, ListId2, () => StateHasChanged());
-        _group.AddModel(ListId1, new SortableListModel(items1) { Settings = settings1 });
-        _group.AddModel(ListId2, new SortableListModel(items2) { Settings = settings2 });
+        _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Settings = settings1 });
+        _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Settings = settings2 });
     }
 
     private void SortList1((int oldIndex, int newIndex) indices)

@@ -170,8 +170,8 @@
 
             SortableListSettings settings = new SortableListSettings() { CloneMode = true };
             _group = new ClonedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
-            _group.AddModel(ListId1, new SortableListModel(items1) { Group = GroupId, Settings = settings });
-            _group.AddModel(ListId2, new SortableListModel(items2) { Group = GroupId, Settings = settings });
+            _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings });
+            _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings });
         }
     }
     ";
@@ -188,8 +188,8 @@
 
         SortableListSettings settings = new SortableListSettings() { CloneMode = true };
         _group = new ClonedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
-        _group.AddModel(ListId1, new SortableListModel(items1) { Group = GroupId, Settings = settings });
-        _group.AddModel(ListId2, new SortableListModel(items2) { Group = GroupId, Settings = settings });
+        _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings });
+        _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings });
     }
 
     private void ListOneRemove((int oldIndex, int newIndex) indices)

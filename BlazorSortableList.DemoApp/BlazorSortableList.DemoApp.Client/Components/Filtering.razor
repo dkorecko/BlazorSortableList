@@ -112,7 +112,7 @@
             items[randomIndex].Disabled = true;
 
             var settings = new SortableListSettings() { CssForDisabledItem = "".filtered"" };
-            _group = new SingleSortableListGroup(ListId, new SortableListModel(items) { Settings = settings });        
+            _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
         }
     }
     ";
@@ -129,7 +129,7 @@
         items[randomIndex].Disabled = true;
 
         var settings = new SortableListSettings() { CssForDisabledItem = ".filtered" };
-        _group = new SingleSortableListGroup(ListId, new SortableListModel(items) { Settings = settings });
+        _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
     }
 
 

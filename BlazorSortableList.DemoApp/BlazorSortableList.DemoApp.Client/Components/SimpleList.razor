@@ -178,7 +178,7 @@
         {
             await base.OnInitializedAsync();
 
-            _group = new SingleSortableListGroup(ListId, new SortableListModel(items));
+            _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items));
         }
     }}";
 
@@ -195,7 +195,7 @@
     {
         await base.OnInitializedAsync();
 
-        _group = new SingleSortableListGroup(ListId, new SortableListModel(items));
+        _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items));
     }
 
     private void SortList((int oldIndex, int newIndex) indices)

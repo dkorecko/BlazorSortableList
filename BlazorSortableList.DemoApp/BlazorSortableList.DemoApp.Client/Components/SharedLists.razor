@@ -161,8 +161,8 @@
         {{
             await base.OnInitializedAsync();
             _group = new SharedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
-            _group.AddModel(ListId1, new SortableListModel(items1) {{ Group = GroupId }});
-            _group.AddModel(ListId2, new SortableListModel(items2) {{ Group = GroupId }});
+            _group.AddModel(ListId1, new SortableListModel<Item>(items1) {{ Group = GroupId }});
+            _group.AddModel(ListId2, new SortableListModel<Item>(items2) {{ Group = GroupId }});
         }}
     }}
     ";
@@ -177,8 +177,8 @@
     {
         await base.OnInitializedAsync();
         _group = new SharedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
-        _group.AddModel(ListId1, new SortableListModel(items1) { Group = GroupId });
-        _group.AddModel(ListId2, new SortableListModel(items2) { Group = GroupId });
+        _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId });
+        _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId });
     }
 
     private void ListOneRemove((int oldIndex, int newIndex) indices)

@@ -153,7 +153,7 @@
             await base.OnInitializedAsync();
 
             var settings = new SortableListSettings() { CssForDragHandle = "".drag-handle"" };
-            _group = new SingleSortableListGroup(ListId, new SortableListModel(items){Settings = settings});
+            _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
         }
     }
     ";
@@ -166,7 +166,7 @@
         await base.OnInitializedAsync();
 
         var settings = new SortableListSettings() { CssForDragHandle = ".drag-handle" };
-        _group = new SingleSortableListGroup(ListId, new SortableListModel(items){Settings = settings});
+        _group = new SingleSortableListGroup(ListId, new SortableListModel<Item>(items) { Settings = settings });
     }
 
     private void SortList((int oldIndex, int newIndex) indices)
