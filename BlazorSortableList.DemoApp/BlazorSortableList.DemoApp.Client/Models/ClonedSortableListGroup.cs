@@ -1,6 +1,6 @@
 ﻿namespace BlazorSortableList.DemoApp.Client.Models;
 
-internal class ClonedSortableListGroup : TwoSortableListGroup, ISortableListHandler
+internal class ClonedSortableListGroup : TwoSortableListGroup<Item>, ISortableListHandler
 {
     public ClonedSortableListGroup(string id1, string id2, Action refreshComponent)
         : base(id1, id2, refreshComponent)

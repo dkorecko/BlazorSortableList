@@ -1,6 +1,6 @@
 ﻿namespace BlazorSortableList.DemoApp.Client.Models;
 
-internal class ForceFallbackListGroup : TwoSortableListGroup, ISortableListHandler
+internal class ForceFallbackListGroup : TwoSortableListGroup<Item>, ISortableListHandler
 {
     public ForceFallbackListGroup(string id1, string id2, Action refreshComponent)
         : base(id1, id2, refreshComponent)

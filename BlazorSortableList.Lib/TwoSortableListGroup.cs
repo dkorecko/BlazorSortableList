@@ -1,4 +1,4 @@
-﻿namespace BlazorSortableList.DemoApp.Client.Models;
+﻿namespace BlazorSortableList;
 
 /// <summary>
 /// Class TwoSortableListGroup.
@@ -6,7 +6,7 @@
 /// Simple protection from direct use. Need to implement empty virtual function
 /// </summary>
 /// <seealso cref="BlazorSortableList.SortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
-internal abstract class TwoSortableListGroup : SortableListGroup<Item>
+public abstract class TwoSortableListGroup<T> : SortableListGroup<T>
 {
     private readonly Action _refreshComponent;
 
@@ -66,19 +66,19 @@ internal abstract class TwoSortableListGroup : SortableListGroup<Item>
         return false;
     }
 
-    protected virtual void ListOneRemove(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    protected virtual void ListOneRemove(int oldIndex, int newIndex, IList<T> items1, IList<T> items2)
     {
     }
 
-    protected virtual void ListOneUpdate(int oldIndex, int newIndex, IList<Item> items1)
+    protected virtual void ListOneUpdate(int oldIndex, int newIndex, IList<T> items1)
     {
     }
 
-    protected virtual void ListTwoRemove(int oldIndex, int newIndex, IList<Item> items2, IList<Item> items1)
+    protected virtual void ListTwoRemove(int oldIndex, int newIndex, IList<T> items2, IList<T> items1)
     {
     }
 
-    protected virtual void ListTwoUpdate(int oldIndex, int newIndex, IList<Item> items2)
+    protected virtual void ListTwoUpdate(int oldIndex, int newIndex, IList<T> items2)
     {
     }
 }
