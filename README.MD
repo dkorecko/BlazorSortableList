@@ -169,11 +169,11 @@ No additional C# code required.
 I am trying to move all the logic to external classes because I want to use the dumb UI.
 
 The main idea is that all lists in the group use the same "data" class. This class received all notifications and manipulated the real data elements (fig.1 - custom sorting group, fig.3 SharedSortableListGroup). Each list must have its own settings. Each list must have its own settings. Settings and data (fig.1 - SortableListModel) are accessible via list id. Make sure you use the same id for the list control and the data insert.
-![image](docu/images/BlayzorSortableList-enh.png)<br>
+<div>![image](docu/images/BlayzorSortableList-enh.png)</div><br>
 *fig.1*
-![image](docu/images/BlayzorSortableList-cd.png)<br>
+<div>![image](docu/images/BlayzorSortableList-cd.png)</div><br>
 *fig.2*
-![image](docu/images/BlayzorSortableList-cd2.png)<br>
+<div>![image](docu/images/BlayzorSortableList-cd2.png)</div><br>
 *fig.3*
 
 You can now compare 2 implementations, old and new:
