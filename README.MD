@@ -301,6 +301,10 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHand
 The default implementation of this class supports rearranging items for each class (`ListArrangeItems`) and moving items from one list to another (`ListMoveItem`).  
 For special cases, you can override any function.
 
+## Update Notes
+Sometimes, when updating the software, the browser used an old version of JavaScript from the cache.
+If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console, Network tab. Then select "Disable Cache" and refresh the page.
+
 ## History
 V2.0 - **Breaking changes!** added support for miltiply lists.  
 V1.2 - addition of data abstraction classes  
