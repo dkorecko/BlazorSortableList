@@ -2,14 +2,14 @@
 
 /// <summary>
 /// Class ForceFallbackListGroup.
-/// Implements the <see cref="BlazorSortableList.TwoSortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
+/// Implements the <see cref="MultiSortableListGroup{T}.DemoApp.Client.Item}" />
 /// Use of default implementation
 /// </summary>
-/// <seealso cref="BlazorSortableList.TwoSortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
-internal class ForceFallbackListGroup : TwoSortableListGroup<Item>
+/// <seealso cref="MultiSortableListGroup{T}.DemoApp.Client.Item}" />
+internal class ForceFallbackListGroup : MultiSortableListGroup<Item>
 {
-    public ForceFallbackListGroup(string id1, string id2, Action refreshComponent)
-        : base(id1, id2, refreshComponent)
+    public ForceFallbackListGroup(Action refreshComponent)
+        : base(refreshComponent)
     {
     }
 }

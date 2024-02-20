@@ -1,32 +1,48 @@
 ﻿@page "/demopage"
 @using BlazorSortableList.DemoApp.Client.Components
+@using BlazorXTabs
 @rendermode InteractiveAuto
 
 <PageTitle>Blazor sortable list demo</PageTitle>
 <PageHeader></PageHeader>
-<div class="has-background-light">
-    <section class="section has-background-white">
-        <SimpleList></SimpleList>
-    </section>
-    <section class="section">
-        <SharedLists></SharedLists>
-    </section>
-    <section class="section has-background-white">
-        <Cloning></Cloning>
-    </section>
-    <section class="section">
-        <DisablingSorting></DisablingSorting>
-    </section>
-    <section class="section has-background-white">
-        <DragHandles></DragHandles>
-    </section>
-    <section class="section">
-        <Filtering></Filtering>
-    </section>
-    <section class="section">
-        <ForceFallback></ForceFallback>
-    </section>
-</div>
+<XTabs>
+    <XTab Title="Single list">
+        <div class="has-background-light">
+            <section class="section has-background-white">
+                <SimpleList></SimpleList>
+            </section>
+            <section class="section">
+                <DragHandles></DragHandles>
+            </section>
+            <section class="section has-background-white">
+                <Filtering></Filtering>
+            </section>
+        </div>
+    </XTab>
+    <XTab Title="Two lists">
+        <div class="has-background-light">
+            <section class="section has-background-white">
+                <SharedLists></SharedLists>
+            </section>
+            <section class="section">
+                <Cloning></Cloning>
+            </section>
+            <section class="section has-background-white">
+                <DisablingSorting></DisablingSorting>
+            </section>
+            <section class="section">
+                <ForceFallback></ForceFallback>
+            </section>
+        </div>
+    </XTab>
+    <XTab Title="Three lists">
+        <div class="has-background-light">
+            <section class="section">
+                <SimpleKanbanBoard></SimpleKanbanBoard>
+            </section>
+        </div>
+    </XTab>
+</XTabs>
 
 @code {
 

@@ -15,12 +15,12 @@ public class SingleSortableListGroup<T> : SortableListGroup<T>, ISortableListHan
         _items = model.Items;
     }
 
-    public virtual bool HandleRemove(string id, string group, int oldIndex, int newIndex)
+    public virtual bool HandleRemove(string fromId, string toId, int oldIndex, int newIndex)
     {
         return false;
     }
 
-    public virtual bool HandleUpdate(string id, string group, int oldIndex, int newIndex)
+    public virtual bool HandleUpdate(string fromId, string toId, int oldIndex, int newIndex)
     {
         SortList(oldIndex, newIndex);
         return true;

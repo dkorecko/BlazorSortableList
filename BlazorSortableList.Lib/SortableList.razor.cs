@@ -106,11 +106,11 @@ namespace BlazorSortableList
         }
 
         [JSInvokable]
-        public void OnUpdateJS(int oldIndex, int newIndex)
+        public void OnUpdateJS(int oldIndex, int newIndex, string fromId, string toId)
         {
             if (_sortableListHandler != null)
             {
-                if (_sortableListHandler.HandleUpdate(Id, Group, oldIndex, newIndex))
+                if (_sortableListHandler.HandleUpdate(fromId, toId, oldIndex, newIndex))
                 {
                     StateHasChanged();
                 }
@@ -121,8 +121,10 @@ namespace BlazorSortableList
                 {
                     if (DefaultSort)
                     {
-                        throw new ArgumentException($"It must be defined as either {{nameof(OnUpdate)}} or {{nameof(DefaultSort)}}, but not both together.");
+                        throw new ArgumentException(
+                            $"It must be defined as either {{nameof(OnUpdate)}} or {{nameof(DefaultSort)}}, but not both together.");
                     }
+
                     // invoke the OnUpdate event passing in the oldIndex and the newIndex
                     OnUpdate.InvokeAsync((oldIndex, newIndex));
                 }
@@ -134,11 +136,11 @@ namespace BlazorSortableList
         }
 
         [JSInvokable]
-        public void OnRemoveJS(int oldIndex, int newIndex)
+        public void OnRemoveJS(int oldIndex, int newIndex, string fromId, string toId)
         {
             if (_sortableListHandler != null)
             {
-                if (_sortableListHandler.HandleRemove(Id, Group, oldIndex, newIndex))
+                if (_sortableListHandler.HandleRemove(fromId, toId, oldIndex, newIndex))
                 {
                     StateHasChanged();
                 }

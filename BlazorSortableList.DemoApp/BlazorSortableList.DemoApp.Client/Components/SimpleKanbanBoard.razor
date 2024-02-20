@@ -1,0 +1,63 @@
+﻿@using BlazorSortableList.DemoApp.Client.Models
+<div class="container">
+    <h1 class="title is-size-1 has-text-centered">Simple Kanban Board</h1>
+    <p class="mb-4">You can rearrange items within each list and drag items between lists.</p>
+
+    <div class="columns is-variable is-6">
+        <div class="column is-4 " style="background-color: #00bfff; margin: 0.5rem;">
+            To Do
+            <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
+                <SortableItemTemplate>
+                    <div class=" card has-border-light has-background-blazor1">
+                        <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                    </div>
+                </SortableItemTemplate>
+            </SortableList>
+        </div>
+        <div class="column is-4" style="background-color: #daa520; margin: 0.5rem;">
+            Doing
+            <SortableList Id="@ListId2" GroupModel="@_group" Context="item">
+                <SortableItemTemplate>
+                    <div class=" card has-border-light has-background-blazor1">
+                        <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                    </div>
+                </SortableItemTemplate>
+            </SortableList>
+        </div>
+        <div class="column is-4" style="background-color: green; margin: 0.5rem;">
+            Done
+            <SortableList Id="@ListId3" GroupModel="@_group" Context="item">
+                <SortableItemTemplate>
+                    <div class=" card has-border-light has-background-blazor1">
+                        <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                    </div>
+                </SortableItemTemplate>
+            </SortableList>
+        </div>
+    </div>
+
+</div>
+@code {
+    private const string ListId1 = "BoardListId1";
+    private const string ListId2 = "BoardListId2";
+    private const string ListId3 = "BoardListId3";
+    private const string GroupId = "BoardGroup";
+
+    public List<Item> items1 = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+    public List<Item> items2 = Enumerable.Range(11, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+    public List<Item> items3 = Enumerable.Range(21, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+    ThreeSortableListGroup _group;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _group = new ThreeSortableListGroup(() => StateHasChanged());
+        _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId });
+        _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId });
+        _group.AddModel(ListId3, new SortableListModel<Item>(items3) { Group = GroupId });
+    }
+    //css example storage: is-one-third - for columns?
+
+}

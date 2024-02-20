@@ -187,7 +187,7 @@
         await base.OnInitializedAsync();
 
         SortableListSettings settings = new SortableListSettings() { CloneMode = true };
-        _group = new ClonedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
+        _group = new ClonedSortableListGroup(() => StateHasChanged());
         _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings });
         _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings });
     }

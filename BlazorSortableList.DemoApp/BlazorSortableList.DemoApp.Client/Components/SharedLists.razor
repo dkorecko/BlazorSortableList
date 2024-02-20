@@ -176,7 +176,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _group = new SharedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
+        _group = new SharedSortableListGroup(() => StateHasChanged());
         _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId });
         _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId });
     }

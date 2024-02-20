@@ -46,9 +46,8 @@
                 <div class="column">
                     <SortableList Id="disabledTwo" Group="disabledSorting" Pull="clone" Items="items2" Context="item" OnUpdate="SortList">
                         <SortableItemTemplate>
-                            <div class=" card has-border-dark has-background-white">
+                            <div class="card has-border-dark has-background-white">
                                 <p class="is-size-4 p-2 ml-4">@item.Name</p>
-
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
@@ -195,7 +194,7 @@
         SortableListSettings settings1 = new SortableListSettings() { CloneMode = true, AllowDrop = false, AllowReorder = false };
         SortableListSettings settings2 = new SortableListSettings() { CloneMode = true };
 
-        _group = new DisableSortingListGroup(ListId1, ListId2, () => StateHasChanged());
+        _group = new DisableSortingListGroup(() => StateHasChanged());
         _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings1 });
         _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings2 });
     }

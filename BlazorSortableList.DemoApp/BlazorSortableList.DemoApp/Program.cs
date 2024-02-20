@@ -9,9 +9,12 @@ namespace BlazorSortableList.DemoApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddRazorComponents()
+            var services = builder.Services;
+            services.AddRazorComponents()
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
+
+            //services.AddServerSideBlazor().AddCircuitOptions(option => { option.DetailedErrors = true; });
 
             var app = builder.Build();
 
@@ -26,6 +29,14 @@ namespace BlazorSortableList.DemoApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //services.AddServerSideBlazor().AddCircuitOptions(option =>
+            //    {
+            //        if (app.Environment.IsDevelopment()) //Only add details when debugging.
+            //        {
+            //            option.DetailedErrors = true;
+            //        }
+            //    });
 
             app.UseHttpsRedirection();
 

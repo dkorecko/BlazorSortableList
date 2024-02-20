@@ -2,14 +2,14 @@
 
 /// <summary>
 /// Class SharedSortableListGroup.
-/// Implements the <see cref="BlazorSortableList.TwoSortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
+/// Implements the <see cref="MultiSortableListGroup{T}.DemoApp.Client.Item}" />
 /// Use of default implementation
 /// </summary>
-/// <seealso cref="BlazorSortableList.TwoSortableListGroup{BlazorSortableList.DemoApp.Client.Item}" />
-internal class SharedSortableListGroup : TwoSortableListGroup<Item>
+/// <seealso cref="MultiSortableListGroup{T}.DemoApp.Client.Item}" />
+internal class SharedSortableListGroup : MultiSortableListGroup<Item>
 {
-    public SharedSortableListGroup(string id1, string id2, Action refreshComponent)
-        : base(id1, id2, refreshComponent)
+    public SharedSortableListGroup(Action refreshComponent)
+        : base(refreshComponent)
     {
     }
 }
