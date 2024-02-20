@@ -60,7 +60,7 @@ dotnet add package BlazorSortableList
 <script type="module" src="_content/BlazorSortableList/SortableList.razor.js"></script>
  ```
 
-4a. [From version 1.2](https://github.com/AlexNek/BlazorSortableList#version-12), you can move all the logic out of the component and use the standard implementation of the logic (`SingleSortableListGroup`, `TwoSortableListGroup`).
+4a. [From version 1.2](https://github.com/AlexNek/BlazorSortableList#version-12), you can move all the logic out of the component and use the standard implementation of the logic (`SingleSortableListGroup`, ~~V1.2:`TwoSortableListGroup`~~, V2.0:`MultiSortableListGroup`).
 
 *Razor*
 ```html
@@ -102,7 +102,7 @@ protected override async Task OnInitializedAsync()
  - ***OnUpdate***: The method to be called when the list is updated.
  - ***Context***: The name of the variable to be used in the template.
 
-The `SortableItemTemplate` can contain any markup or components that you want.
+The `SortableItemTemplate` can contain any markup or components that you want. `SortList` implementation see below.
 
 ## Attributes
 
@@ -263,6 +263,43 @@ protected override async Task OnInitializedAsync()
 }
 
 ```
+### Version 2.0
+From this version it is possible to use more than two lists.
+![image](docu/images/kanban-board.png)  
+I decided to replace the old `TwoSortableListGroup` class with the new `MultiSortableListGroup` class to provide that functionality.
+
+```csharp
+public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
+{
+
+    protected MultiSortableListGroup(Action refreshComponent)
+    {
+    ...
+    }
+
+    public virtual bool HandleRemove(string fromId, string toId, int oldIndex, int newIndex)
+    {
+        ... call ListMoveItem()
+    }
+
+    public virtual bool HandleUpdate(string id, int oldIndex, int newIndex)
+    {
+        ... call ListArrangeItems()
+    }
+
+    protected virtual void ListMoveItem(int oldIndex, int newIndex, IList<T> items1, IList<T> items2)
+    {
+        ...
+    }
+
+    protected virtual void ListArrangeItems(int oldIndex, int newIndex, IList<T> items)
+    {
+        ....
+    }
+}
+```
+The default implementation of this class supports rearranging items for each class (`ListArrangeItems`) and moving items from one list to another (`ListMoveItem`).  
+For special cases, you can override any function.
 
 ## History
 V2.0 - **Breaking changes!** added support for miltiply lists.  
