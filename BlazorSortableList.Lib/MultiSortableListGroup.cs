@@ -32,9 +32,9 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHand
         return false;
     }
 
-    public virtual bool HandleUpdate(string fromId, string toId, int oldIndex, int newIndex)
+    public virtual bool HandleUpdate(string id, int oldIndex, int newIndex)
     {
-        var items = GetModel(fromId)?.Items;
+        var items = GetModel(id)?.Items;
         if (items != null)
         {
             ListArrangeItems(oldIndex, newIndex, items);

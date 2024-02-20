@@ -20,8 +20,8 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
             component.invokeMethodAsync('OnUpdateJS',
                 event.oldDraggableIndex,
                 event.newDraggableIndex,
-                event.from.id,
-                event.to.id);
+                event.from.id
+                );
         },
         onRemove: (event) => {
             if (event.pullMode === 'clone') {

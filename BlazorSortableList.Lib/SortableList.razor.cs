@@ -106,11 +106,11 @@ namespace BlazorSortableList
         }
 
         [JSInvokable]
-        public void OnUpdateJS(int oldIndex, int newIndex, string fromId, string toId)
+        public void OnUpdateJS(int oldIndex, int newIndex, string fromId)
         {
             if (_sortableListHandler != null)
             {
-                if (_sortableListHandler.HandleUpdate(fromId, toId, oldIndex, newIndex))
+                if (_sortableListHandler.HandleUpdate(fromId, oldIndex, newIndex))
                 {
                     StateHasChanged();
                 }
