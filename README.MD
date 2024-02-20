@@ -5,7 +5,7 @@ Fork an implementation of the [SortableJS library](https://sortablejs.github.io/
 - [View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
 - [View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
 
-> Original JS library has more features as implemented now - Not easy or not possible to implement
+> Original JS library has more features as implemented now - Not easy or not possible to implement.  
 > Current version supports one or two lists.
 
 Great implementation, but I would like to make some changes:
