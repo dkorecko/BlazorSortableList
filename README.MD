@@ -5,12 +5,15 @@ Fork an implementation of the [SortableJS library](https://sortablejs.github.io/
 - [View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
 - [View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
 
-> Original JS library has more features as implemented now
+> Original JS library has more features as implemented now - Not easy or not possible to implement
+> Current version supports one or two lists.
 
 Great implementation, but I would like to make some changes:
 - extract package
 - use .NET 8.0 project style for Demo application
 - I am thinking of an architecture/usability improvement.
+- add support for multiple lists
+- implement some of the missing functionality from the JS library.
 
 > The latest changes will appear first on the development branch.
 
@@ -83,7 +86,7 @@ protected override async Task OnInitializedAsync()
 }
 ```
 
-4b. Version 1.0 and 1.1 - Add the SortableList component to your page and define the SortableItemTemplate...
+4b. Or you can use the old style - Add the SortableList component to your page and define the SortableItemTemplate...
 ```html
 @using BlazorSortableList
 <SortableList Id="sortable" Items="items" OnUpdate="@SortList" Context="item">
@@ -262,6 +265,7 @@ protected override async Task OnInitializedAsync()
 ```
 
 ## History
+V2.0 - **Breaking changes!** added support for miltiply lists.  
 V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
 V1.0 - orignal component
