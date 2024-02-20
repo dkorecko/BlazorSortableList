@@ -23,6 +23,7 @@ public class SingleSortableListGroup<T> : SortableListGroup<T>, ISortableListHan
     public virtual bool HandleUpdate(string id, int oldIndex, int newIndex)
     {
         SortList(oldIndex, newIndex);
+        //refresh control
         return true;
     }
 
