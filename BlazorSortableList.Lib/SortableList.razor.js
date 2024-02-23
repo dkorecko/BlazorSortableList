@@ -12,6 +12,9 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
         forceFallback: forceFallback,
         handle: handle || undefined,
         onUpdate: (event) => {
+            //console.log("onUpdate:");
+            //console.log(event);
+
             // Revert the DOM to match the .NET state
             event.item.remove();
             event.to.insertBefore(event.item, event.to.childNodes[event.oldIndex]);
@@ -24,6 +27,8 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 );
         },
         onRemove: (event) => {
+            //console.log("onRemove:");
+            //console.log(event);
             if (event.pullMode === 'clone') {
                 // Remove the clone
                 event.clone.remove();
