@@ -1,9 +1,14 @@
 assembly-informational-format: '{Major}.{Minor}.{Patch}.{CommitsSinceVersionSource}'
 mode: Mainline
+increment: Inherit
 next-version: 2.0.0
 branches:
-  master: {}
-  develop: {}
+  master: 
+    is-release-branch: true 
+    is-mainline: true
+  develop: 
+    is-release-branch: false
+    is-mainline: false
 ignore:
   sha: []
 merge-message-formats: {}
