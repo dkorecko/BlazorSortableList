@@ -1,4 +1,5 @@
-﻿<div class="has-background-light">
+﻿@using System.Reflection
+<div class="has-background-light">
     <div class="hero">
         <div class="hero-body has-background-blazor has-text-white has-text-centered">
             <h1 class="title is-size-1 has-text-white">Blazor Sortable</h1>
@@ -16,10 +17,27 @@
             <span class="icon">
                 <i class="fab fa-github"></i>
             </span>
-            <span>View the extended project on GitHub</span>
+            <span>View the extended project on GitHub. Package V@_version</span>
         </a>
     </div>
 </div>
 
 @code {
+
+    private Version? _version;
+
+    /// <summary>
+    /// Method invoked when the component is ready to start, having received its
+    /// initial parameters from its parent in the render tree.
+    /// Override this method if you will perform an asynchronous operation and
+    /// want the component to refresh when that operation is completed.
+    /// </summary>
+    /// <returns>A <see cref="T:System.Threading.Tasks.Task" /> representing any asynchronous operation.</returns>
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var assembly = typeof(ISortableListHandler).Assembly;
+        _version = assembly.GetName().Version;
+    }
+
 }
