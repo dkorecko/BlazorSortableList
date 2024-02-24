@@ -51,7 +51,9 @@ namespace BlazorSortableList
 
         private DotNetObjectReference<SortableList<T>>? selfReference;
 
-        private ISortableListHandler? _sortableListHandler;
+        private ISortableListItemMover? _sortableListHandler;
+
+        private ISortableListSelection? _sortableListSelection;
 
         /// <summary>
         /// Method invoked when the component has received parameters from its parent in
@@ -61,7 +63,8 @@ namespace BlazorSortableList
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
-            _sortableListHandler = GroupModel as ISortableListHandler;
+            _sortableListHandler = GroupModel as ISortableListItemMover;
+            _sortableListSelection = GroupModel as ISortableListSelection;
 
             if (GroupModel != null)
             {
@@ -152,6 +155,29 @@ namespace BlazorSortableList
             }
         }
 
+        [JSInvokable]
+        public void OnSelectJS(string fromId, int index)
+        {
+            if (_sortableListSelection != null)
+            {
+                if (_sortableListSelection.HandleSelect(fromId, index))
+                {
+                    StateHasChanged();
+                }
+            }
+        }
+
+        [JSInvokable]
+        public void OnDeselectJS(string fromId, int index)
+        {
+            if (_sortableListSelection != null)
+            {
+                if (_sortableListSelection.HandleDeselect(fromId, index))
+                {
+                    StateHasChanged();
+                }
+            }
+        }
         public void Dispose() => selfReference?.Dispose();
 
         private void SortList(int oldIndex, int newIndex)
