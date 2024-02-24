@@ -1,6 +1,6 @@
 ﻿namespace BlazorSortableList;
 
-public interface ISortableListHandler
+public interface ISortableListItemMover
 {
     public bool HandleRemove(string fromId, string toId, int oldIndex, int newIndex);
 

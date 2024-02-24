@@ -1,6 +1,6 @@
 ﻿namespace BlazorSortableList;
 
-public class SingleSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
+public class SingleSortableListGroup<T> : SortableListGroup<T>, ISortableListItemMover
 {
     private readonly IList<T> _items;
 

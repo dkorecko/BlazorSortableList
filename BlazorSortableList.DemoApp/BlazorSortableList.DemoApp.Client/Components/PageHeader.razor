@@ -37,7 +37,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        var assembly = typeof(ISortableListHandler).Assembly;
+        var assembly = typeof(ISortableListItemMover).Assembly;
         _version = assembly.GetName().Version?.ToString();
 
         var gitVersionInformationType = assembly.GetType("GitVersionInformation");
