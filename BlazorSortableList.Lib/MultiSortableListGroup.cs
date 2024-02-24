@@ -8,7 +8,7 @@
 /// </summary>
 /// <typeparam name="T"></typeparam>
 /// <seealso cref="BlazorSortableList.SortableListGroup{T}" />
-public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHandler
+public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListItemMover
 {
     private readonly Action _refreshComponent;
  
@@ -49,12 +49,14 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHand
     {
         // get the item at the old index in list 1
         var item = items1[oldIndex];
-
-        // add it to the new index in list 2
-        items2.Insert(newIndex, item);
+        if (newIndex < items2.Count)
+        {
+            // add it to the new index in list 2
+            items2.Insert(newIndex, item);
+        }
 
         // remove the item from the old index in list 1
-        items1.Remove(items1[oldIndex]);
+        items1.RemoveAt(oldIndex);
     }
 
     protected virtual void ListArrangeItems(int oldIndex, int newIndex, IList<T> items)

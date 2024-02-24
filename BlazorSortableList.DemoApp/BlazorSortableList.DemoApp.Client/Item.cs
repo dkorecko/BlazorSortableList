@@ -7,6 +7,7 @@ public class Item
     public string Name { get; set; } = "";
 
     public bool Disabled { get; set; } = false;
+    public bool Selected { get; set; } = false;
 
     public Item Clone()
     {
@@ -14,5 +15,12 @@ public class Item
         // more advanced option https://github.com/Burtsev-Alexey/net-object-deep-copy/blob/master/ObjectExtensions.cs
 
         return (Item)MemberwiseClone();
+    }
+
+    /// <summary>Returns a string that represents the current object.</summary>
+    /// <returns>A string that represents the current object.</returns>
+    public override string ToString()
+    {
+        return $"{Id}.{Name}";
     }
 }
