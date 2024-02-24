@@ -1,32 +1,48 @@
+using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Diagnostics.CodeAnalysis;
 
 namespace BlazorSortableList
 {
     public partial class SortableList<T>
     {
+        private ISortableListItemMover? _sortableListHandler;
+
+        private ISortableListSelection? _sortableListSelection;
+
+        private DotNetObjectReference<SortableList<T>>? selfReference;
 
         [Parameter]
-        public RenderFragment<T>? SortableItemTemplate { get; set; }
+        public bool DefaultSort { get; set; }
 
-        [Parameter, AllowNull]
-        public IList<T> Items { get; set; }
+        [Parameter]
+        public string? Filter { get; set; }
+
+        [Parameter]
+        public bool ForceFallback { get; set; } = true;
+
+        [Parameter]
+        public string Group { get; set; } = Guid.NewGuid().ToString();
 
         [Parameter]
         public ISortableListGroup<T>? GroupModel { get; set; }
 
         [Parameter]
-        public EventCallback<(int oldIndex, int newIndex)> OnUpdate { get; set; }
-
-        [Parameter]
-        public EventCallback<(int oldIndex, int newIndex)> OnRemove { get; set; }
+        public string? Handle { get; set; }
 
         [Parameter]
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [Parameter]
-        public string Group { get; set; } = Guid.NewGuid().ToString();
+        [AllowNull]
+        public IList<T> Items { get; set; }
+
+        [Parameter]
+        public EventCallback<(int oldIndex, int newIndex)> OnRemove { get; set; }
+
+        [Parameter]
+        public EventCallback<(int oldIndex, int newIndex)> OnUpdate { get; set; }
 
         [Parameter]
         public string? Pull { get; set; }
@@ -38,22 +54,92 @@ namespace BlazorSortableList
         public bool Sort { get; set; } = true;
 
         [Parameter]
-        public string? Handle { get; set; }
+        public RenderFragment<T>? SortableItemTemplate { get; set; }
 
-        [Parameter]
-        public string? Filter { get; set; }
+        public void Dispose() => selfReference?.Dispose();
 
-        [Parameter]
-        public bool ForceFallback { get; set; } = true;
+        [JSInvokable]
+        public void OnDeselectJS(string fromId, int index)
+        {
+            if (_sortableListSelection != null)
+            {
+                if (_sortableListSelection.HandleDeselect(fromId, index))
+                {
+                    StateHasChanged();
+                }
+            }
+        }
 
-        [Parameter]
-        public bool DefaultSort { get; set; }
+        [JSInvokable]
+        public void OnRemoveJS(int oldIndex, int newIndex, string fromId, string toId)
+        {
+            if (_sortableListHandler != null)
+            {
+                if (_sortableListHandler.HandleRemove(fromId, toId, oldIndex, newIndex))
+                {
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                // remove the item from the list
+                OnRemove.InvokeAsync((oldIndex, newIndex));
+            }
+        }
 
-        private DotNetObjectReference<SortableList<T>>? selfReference;
+        [JSInvokable]
+        public void OnSelectJS(string fromId, int index)
+        {
+            if (_sortableListSelection != null)
+            {
+                if (_sortableListSelection.HandleSelect(fromId, index))
+                {
+                    StateHasChanged();
+                }
+            }
+        }
 
-        private ISortableListItemMover? _sortableListHandler;
+        [JSInvokable]
+        public void OnUpdateJS(int oldIndex, int newIndex, string fromId)
+        {
+            if (_sortableListHandler != null)
+            {
+                if (_sortableListHandler.HandleUpdate(fromId, oldIndex, newIndex))
+                {
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                if (OnUpdate.HasDelegate)
+                {
+                    if (DefaultSort)
+                    {
+                        throw new ArgumentException(
+                            "It must be defined as either {nameof(OnUpdate)} or {nameof(DefaultSort)}, but not both together.");
+                    }
 
-        private ISortableListSelection? _sortableListSelection;
+                    // invoke the OnUpdate event passing in the oldIndex and the newIndex
+                    OnUpdate.InvokeAsync((oldIndex, newIndex));
+                }
+                else if (DefaultSort)
+                {
+                    SortList(oldIndex, newIndex);
+                }
+            }
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                selfReference = DotNetObjectReference.Create(this);
+                var module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorSortableList/SortableList.razor.js");
+
+                //await JS.InvokeVoidAsync("console.log", $"***id:{Id}, group:{Group},pull: {Pull},put:{Put},sort:{Sort}, handle:{Handle}, filter:{Filter}, forceFallback:{ForceFallback}");
+                await module.InvokeAsync<string>("init", Id, Group, Pull, Put, Sort, Handle, Filter, selfReference, ForceFallback);
+            }
+        }
 
         /// <summary>
         /// Method invoked when the component has received parameters from its parent in
@@ -96,93 +182,8 @@ namespace BlazorSortableList
             }
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (firstRender)
-            {
-                selfReference = DotNetObjectReference.Create(this);
-                var module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorSortableList/SortableList.razor.js");
-
-                //await JS.InvokeVoidAsync("console.log", $"***id:{Id}, group:{Group},pull: {Pull},put:{Put},sort:{Sort}, handle:{Handle}, filter:{Filter}, forceFallback:{ForceFallback}");
-                await module.InvokeAsync<string>("init", Id, Group, Pull, Put, Sort, Handle, Filter, selfReference, ForceFallback);
-            }
-        }
-
-        [JSInvokable]
-        public void OnUpdateJS(int oldIndex, int newIndex, string fromId)
-        {
-            if (_sortableListHandler != null)
-            {
-                if (_sortableListHandler.HandleUpdate(fromId, oldIndex, newIndex))
-                {
-                    StateHasChanged();
-                }
-            }
-            else
-            {
-                if (OnUpdate.HasDelegate)
-                {
-                    if (DefaultSort)
-                    {
-                        throw new ArgumentException(
-                            $"It must be defined as either {{nameof(OnUpdate)}} or {{nameof(DefaultSort)}}, but not both together.");
-                    }
-
-                    // invoke the OnUpdate event passing in the oldIndex and the newIndex
-                    OnUpdate.InvokeAsync((oldIndex, newIndex));
-                }
-                else if (DefaultSort)
-                {
-                    SortList(oldIndex, newIndex);
-                }
-            }
-        }
-
-        [JSInvokable]
-        public void OnRemoveJS(int oldIndex, int newIndex, string fromId, string toId)
-        {
-            if (_sortableListHandler != null)
-            {
-                if (_sortableListHandler.HandleRemove(fromId, toId, oldIndex, newIndex))
-                {
-                    StateHasChanged();
-                }
-            }
-            else
-            {
-                // remove the item from the list
-                OnRemove.InvokeAsync((oldIndex, newIndex));
-            }
-        }
-
-        [JSInvokable]
-        public void OnSelectJS(string fromId, int index)
-        {
-            if (_sortableListSelection != null)
-            {
-                if (_sortableListSelection.HandleSelect(fromId, index))
-                {
-                    StateHasChanged();
-                }
-            }
-        }
-
-        [JSInvokable]
-        public void OnDeselectJS(string fromId, int index)
-        {
-            if (_sortableListSelection != null)
-            {
-                if (_sortableListSelection.HandleDeselect(fromId, index))
-                {
-                    StateHasChanged();
-                }
-            }
-        }
-        public void Dispose() => selfReference?.Dispose();
-
         private void SortList(int oldIndex, int newIndex)
         {
-
             var items = Items;
             if (items != null)
             {
