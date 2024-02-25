@@ -9,7 +9,6 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
 
     protected override void ListArrangeItems(int oldIndex, int newIndex, IList<Item> items)
     {
-        //return;
         var selected = new List<Item>();
         for (int i = 0; i < items.Count;)
         {
@@ -51,7 +50,6 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
 
     protected override void ListMoveItem(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
     {
-        return;
         List<Item> selected = GetSelected(items1);
 
         var index = newIndex;
@@ -79,17 +77,12 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
     private static List<Item> GetSelected(IList<Item> items1)
     {
         var selected = new List<Item>();
-        for (int i = 0; i < items1.Count;)
+        for (int i = 0; i < items1.Count; i++)
         {
             var item = items1[i];
             if (item.Selected)
             {
                 selected.Add(item);
-                //items1.RemoveAt(i);
-            }
-            else
-            {
-                i++;
             }
         }
 
@@ -100,7 +93,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
     {
         bool ret = false;
         var items = GetModel(fromId)?.Items;
-        if (items != null)
+        if (items != null && index >= 0 && index < items.Count)
         {
             Item item = items[index];
             if (!item.Selected)
@@ -109,6 +102,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
                 ret = true;
             }
         }
+
         return ret;
     }
 
@@ -116,7 +110,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
     {
         bool ret = false;
         var items = GetModel(fromId)?.Items;
-        if (items != null && index < items.Count)
+        if (items != null && index >= 0 && index < items.Count)
         {
             Item item = items[index];
             if (item.Selected)
@@ -125,6 +119,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
                 ret = true;
             }
         }
+
         return ret;
     }
 }

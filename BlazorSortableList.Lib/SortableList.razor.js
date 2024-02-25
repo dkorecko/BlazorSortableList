@@ -34,7 +34,12 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 // Revert the DOM to match the .NET state
                 newIndicies.forEach((item) => {
                     event.from.removeChild(item.multiDragElement);
+                    // remove selection
+                    //toggleClass(item.multiDragElement, cssForSelection, false);
+                    //sortable.utils.deselect(item.multiDragElement);
+
                 });
+
                 let oldIndicies = Array.from(event.oldIndicies);
                 oldIndicies.forEach((item) => {
                     event.to.insertBefore(item.multiDragElement, event.to.childNodes[item.index]);
@@ -70,6 +75,18 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
             let newIndicies = Array.from(event.newIndicies);
             if (newIndicies.length > 0) {
                 newIndex = newIndicies[0].index;
+
+                // Revert the DOM to match the .NET state
+                newIndicies.forEach((item) => {
+                    event.to.removeChild(item.multiDragElement);
+                    // remove selection???
+                    
+                });
+
+                let oldIndicies = Array.from(event.oldIndicies);
+                oldIndicies.forEach((item) => {
+                    event.from.insertBefore(item.multiDragElement, event.from.childNodes[item.index]);
+                });
             } else {
                 // Revert the DOM to match the .NET state
                 event.item.remove();
