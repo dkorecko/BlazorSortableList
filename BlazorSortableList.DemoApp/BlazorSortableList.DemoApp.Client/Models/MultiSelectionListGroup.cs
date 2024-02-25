@@ -9,6 +9,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
 
     protected override void ListArrangeItems(int oldIndex, int newIndex, IList<Item> items)
     {
+        //return;
         var selected = new List<Item>();
         for (int i = 0; i < items.Count;)
         {
@@ -29,6 +30,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
         {
             foreach (var item in selected)
             {
+                item.Selected = false;
                 items.Add(item);
             }
         }
@@ -36,6 +38,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
         {
             foreach (var item in selected)
             {
+                item.Selected = false;
                 items.Insert(index++, item);
             }
         }
@@ -48,6 +51,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
 
     protected override void ListMoveItem(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
     {
+        return;
         List<Item> selected = GetSelected(items1);
 
         var index = newIndex;

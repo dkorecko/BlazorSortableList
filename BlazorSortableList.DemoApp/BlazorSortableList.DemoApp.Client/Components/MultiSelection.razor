@@ -10,7 +10,7 @@
 </style>
 
 <div class="container">
-    <h1 class="title is-size-1 has-text-centered">Multiple selection</h1>
+    <h1 class="title is-size-1 has-text-centered">Multiple selection from V2.0</h1>
     <p class="mb-4">
         Multiple-selection shared lists are lists where one or more items can be dragged from one list to another and vice versa.
         Providing the same "Group" string name for both lists is what links them together. 
@@ -18,13 +18,13 @@
         This is because Blazor controls the rendering of the list items.</p>
    <button @onclick="RefreshControl">Refresh</button>
    <XTabs>
-           <XTab Title="Example V2.0">
+           <XTab Title="Example">
             <div class="columns">
                 <div class="column">
                     <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-background-white @(item.Selected ? "selected" : "")">
-                                <p class="is-size-4 p-2 ml-4">@item.Name, @item.Selected, @DateTime.Now.ToLongTimeString()</p>
+                                <p class="is-size-4 p-2 ml-4">@item.Name, @item.Selected, @DateTime.Now.ToString("O")</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
@@ -40,7 +40,7 @@
                 </div>
             </div>                  
         </XTab>
-        <XTab Title="Code V2.0">
+        <XTab Title="Code">
             <pre>@codeContent1</pre>
         </XTab>
         

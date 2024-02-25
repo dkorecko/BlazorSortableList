@@ -57,9 +57,17 @@ public class SortableListSettings
     public bool MultiSelection { get; set; }
 
     /// <summary>
-    /// Gets or sets the multi drag key.
-    /// alt for sample
+    /// Gets or sets the multi drag key. Case is ignored
+    /// alt for example
     /// </summary>
     /// <value>The multi drag key.</value>
     public string? MultiDragKey { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether to avoid implicit deselection.
+    /// By default, (un-moved) items are deselected by clicking outside.
+    /// 
+    /// </summary>
+    /// <value><c>true</c> if you don't want to deselect items on outside click; otherwise, <c>false</c>.</value>
+    public bool AvoidImplicitDeselect { get; set; }
 }

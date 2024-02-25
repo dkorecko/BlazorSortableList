@@ -13,6 +13,12 @@ namespace BlazorSortableList
 
         private DotNetObjectReference<SortableList<T>>? selfReference;
 
+        private string _cssForSelection;
+
+        private string? _multiDragKey = string.Empty;
+
+        private bool _avoidImplicitDeselect;
+
         [Parameter]
         public bool DefaultSort { get; set; }
 
@@ -137,7 +143,7 @@ namespace BlazorSortableList
                 var module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorSortableList/SortableList.razor.js");
 
                 //await JS.InvokeVoidAsync("console.log", $"***id:{Id}, group:{Group},pull: {Pull},put:{Put},sort:{Sort}, handle:{Handle}, filter:{Filter}, forceFallback:{ForceFallback}");
-                await module.InvokeAsync<string>("init", Id, Group, Pull, Put, Sort, Handle, Filter, selfReference, ForceFallback);
+                await module.InvokeAsync<string>("init", Id, Group, Pull, Put, Sort, Handle, Filter, selfReference, ForceFallback, _cssForSelection, _multiDragKey, _avoidImplicitDeselect);
             }
         }
 
@@ -177,6 +183,14 @@ namespace BlazorSortableList
 
                         Filter = settings.CssForDisabledItem;
                         ForceFallback = !settings.AllowHtml5DragAndDrop;
+                        if (settings.MultiSelection)
+                        {
+                            _cssForSelection = string.IsNullOrEmpty(settings.CssForSelection) ? "sortable-selected" : settings.CssForSelection;
+                            _multiDragKey = settings.MultiDragKey;
+                            _avoidImplicitDeselect = settings.AvoidImplicitDeselect;
+
+                            _multiDragKey ??= String.Empty;
+                        }
                     }
                 }
             }
