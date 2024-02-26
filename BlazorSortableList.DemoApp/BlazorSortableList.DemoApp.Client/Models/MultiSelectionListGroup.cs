@@ -24,22 +24,29 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
             }
         }
 
-        var index = newIndex;
-        if (index >= items.Count)
+        if (selected.Any())
         {
-            foreach (var item in selected)
+            var index = newIndex;
+            if (index >= items.Count)
             {
-                item.Selected = false;
-                items.Add(item);
+                foreach (var item in selected)
+                {
+                    item.Selected = false;
+                    items.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in selected)
+                {
+                    item.Selected = false;
+                    items.Insert(index++, item);
+                }
             }
         }
         else
         {
-            foreach (var item in selected)
-            {
-                item.Selected = false;
-                items.Insert(index++, item);
-            }
+            base.ListArrangeItems(oldIndex, newIndex, items);
         }
 
         //foreach (var item in selected)
@@ -52,25 +59,32 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
     {
         List<Item> selected = GetSelected(items1);
 
-        var index = newIndex;
-        if (index >= items2.Count)
+        if (selected.Any())
         {
+            var index = newIndex;
+            if (index >= items2.Count)
+            {
+                foreach (var item in selected)
+                {
+                    items2.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in selected)
+                {
+                    items2.Insert(index++, item);
+                }
+            }
+
             foreach (var item in selected)
             {
-                items2.Add(item);
+                items1.Remove(item);
             }
         }
         else
         {
-            foreach (var item in selected)
-            {
-                items2.Insert(index++, item);
-            }
-        }
-
-        foreach (var item in selected)
-        {
-            items1.Remove(item);
+            base.ListMoveItem(oldIndex, newIndex, items1, items2);
         }
     }
 
