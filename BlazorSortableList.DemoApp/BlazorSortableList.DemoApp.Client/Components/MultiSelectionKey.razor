@@ -1,0 +1,121 @@
+@using BlazorXTabs
+@using BlazorSortableList.DemoApp.Client.Models
+
+<style>
+    .selected {
+        border: 1px solid green !important;
+        z-index: 1 !important;
+    }
+</style>
+
+<div class="container">
+    <h1 class="title is-size-1 has-text-centered">Multiple selection with alt key</h1>
+    <p class="mb-4">
+        Multiple-selection shared lists are lists where one or more items can be dragged from one list to another and vice versa.
+        Providing the same "Group" string name for both lists is what links them together. 
+        Note that when an item is dragged into a different list, it assumes the visual style of that list. 
+        This is because Blazor controls the rendering of the list items. 
+    </p>
+    <p>Press <strong>Alt</strong>key to select an item</p>
+   <button @onclick="RefreshControl">Refresh</button>
+   <XTabs>
+           <XTab Title="Example">
+            <div class="columns">
+                <div class="column">
+                    <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
+                        <SortableItemTemplate>
+                            <div class="card has-background-white @(item.Selected ? "selected" : "")">
+                                <p class="is-size-4 p-2 ml-4">@item.Name, @item.Selected, @DateTime.Now.ToString("O")</p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+                <div class="column">
+                    <SortableList Id="@ListId2" GroupModel="@_group" Context="item">
+                        <SortableItemTemplate>
+                            <div class="card  has-border-dark @(item.Selected ? "selected" : "")">
+                                <p class="is-size-4 p-2 ml-4">@item.Name, @item.Selected</p>
+                            </div>
+                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>                  
+        </XTab>
+        <XTab Title="Code">
+            <pre>@codeContent1</pre>
+        </XTab>
+        
+    </XTabs>
+</div>
+
+@code {
+    private const string ListId1 = "SharedKeyListId1";
+    private const string ListId2 = "SharedKeyListId2";
+    private const string GroupId = "CommonGroup2";
+
+    private string codeContent1 = @"
+    <SortableList Id=""@ListId1"" GroupModel=""@_group"" Context=""item"">
+       <SortableItemTemplate>
+         <div class=""card has-background-white @(item.Selected ? ""selected"" : """")"">
+            <p class=""is-size-4 p-2 ml-4"">@item.Name, @item.Selected</p>
+         </div>
+       </SortableItemTemplate>
+    </SortableList>
+    <SortableList Id=""@ListId2"" GroupModel=""@_group"" Context=""item"">
+        <SortableItemTemplate>
+            <div class=""card  has-border-dark @(item.Selected ? ""selected"" : """")"">
+                <p class=""is-size-4 p-2 ml-4"">@item.Name, @item.Selected</p>
+            </div>
+        </SortableItemTemplate>
+    </SortableList>
+
+    @code {
+        private const string ListId1 = ""SharedListId1"";
+        private const string ListId2 = ""SharedListId2"";
+        private const string GroupId = ""CommonGroup"";
+
+        public List<Item> items1 = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList();
+
+        public List<Item> items2 = Enumerable.Range(11, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList();
+
+        MultiSelectionListGroup _group;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            _group = new MultiSelectionListGroup(RefreshControl);
+
+            var settings = new SortableListSettings() { MultiSelection = true, CssForSelection = ""selected"" };
+            _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings});
+            _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings});
+        }
+    }
+    ";
+
+
+    public List<Item> items1 = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+    public List<Item> items2 = Enumerable.Range(11, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
+
+    MultiSelectionListGroup _group;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _group = new MultiSelectionListGroup(RefreshControl);
+
+        var settings = new SortableListSettings() { MultiSelection = true, CssForSelection = "selected", AddToSelectionKey = "alt" };
+
+        _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings});
+        _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings});
+    }
+
+    private void RefreshControl()
+    {
+        StateHasChanged();
+        // _ = InvokeAsync(() =>
+        //     {
+        //         StateHasChanged();
+        //     });
+    }
+}

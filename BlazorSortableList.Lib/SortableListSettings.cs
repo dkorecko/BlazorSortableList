@@ -61,7 +61,7 @@ public class SortableListSettings
     /// alt for example
     /// </summary>
     /// <value>The multi drag key.</value>
-    public string? MultiDragKey { get; set; }
+    public string? AddToSelectionKey { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether to avoid implicit deselection.

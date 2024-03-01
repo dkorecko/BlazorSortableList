@@ -186,7 +186,7 @@ namespace BlazorSortableList
                         if (settings.MultiSelection)
                         {
                             _cssForSelection = string.IsNullOrEmpty(settings.CssForSelection) ? "sortable-selected" : settings.CssForSelection;
-                            _multiDragKey = settings.MultiDragKey;
+                            _multiDragKey = settings.AddToSelectionKey;
                             _avoidImplicitDeselect = settings.AvoidImplicitDeselect;
 
                             _multiDragKey ??= String.Empty;
