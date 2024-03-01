@@ -13,11 +13,9 @@
     <p class="mb-4">
         Multiple-selection shared lists are lists where one or more items can be dragged from one list to another and vice versa.
         Providing the same "Group" string name for both lists is what links them together. 
-        Note that when an item is dragged into a different list, it assumes the visual style of that list. 
-        This is because Blazor controls the rendering of the list items. 
     </p>
-    <p>Press <strong>Alt</strong>key to select an item</p>
-   <button @onclick="RefreshControl">Refresh</button>
+    <p>Press <strong>Alt</strong> key to select additional item</p>
+   
    <XTabs>
            <XTab Title="Example">
             <div class="columns">
@@ -25,7 +23,7 @@
                     <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-background-white @(item.Selected ? "selected" : "")">
-                                <p class="is-size-4 p-2 ml-4">@item.Name, @item.Selected, @DateTime.Now.ToString("O")</p>
+                                <p class="is-size-4 p-2 ml-4">@item.Name, @item.Selected</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
@@ -51,7 +49,7 @@
 @code {
     private const string ListId1 = "SharedKeyListId1";
     private const string ListId2 = "SharedKeyListId2";
-    private const string GroupId = "CommonGroup2";
+    private const string GroupId = "CommonGroupKey";
 
     private string codeContent1 = @"
     <SortableList Id=""@ListId1"" GroupModel=""@_group"" Context=""item"">

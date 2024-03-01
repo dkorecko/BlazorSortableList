@@ -80,6 +80,7 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
             foreach (var item in selected)
             {
                 items1.Remove(item);
+                item.Selected = false;
             }
         }
         else
