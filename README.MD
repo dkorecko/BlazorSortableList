@@ -237,36 +237,7 @@ protected override async Task OnInitializedAsync()
 There are two default generic implementations, `SingleSortableListGroup` and `TwoSortableListGroup`.
 Both implement standard operations for single list and group of two lists (see demo application for details).
 
-#### Properties of the `SortableListSettings` Class
 
-|Name| Similar name for Component | Type | Default|Ver.|Description|
-|---|------|------|--------|---|-----------|
-|CloneMode|Pull|Boolean|false|1.2|Used when you want to clone elments into a list instead of moving them. |
-|AllowDrop|Put|Boolean|true|1.2|Set to false to disable dropping from another list onto the current list|
-|AllowReorder|Sort|Boolean|true|1.2|Disable sorting within a list by setting to `false`|
-|CssForDragHandle|Handle|String|""|1.2|The CSS class you want the sortable to respect as the drag handle|
-|CssForDisabledItem|Filter|String|""|1.2|The CSS class you want to use to identify elements that cannot be sorted or moved|
-|AllowHtml5DragAndDrop|ForceFallback|Boolean|false|1.2|Enable HTML5 drag and drop |
-|MultiSelection|-|boolean|false|2.0|Enable mutiple selection|
-|AddToSelectionKey|-|string|null|2.0|Define custom key for mutiple selection|
-|AvoidImplicitDeselect|-|boolean|false|2.0|By default, if you press outside the list box, the selection is removed. To prevent this, set it to true|
-
-
-Example of how to use the settings
-```csharp
-ClonedSortableListGroup _group;
-
-protected override async Task OnInitializedAsync()
-{
-    await base.OnInitializedAsync();
-
-    SortableListSettings settings = new SortableListSettings() { CloneMode = true };
-    _group = new ClonedSortableListGroup(ListId1, ListId2, () => StateHasChanged());
-    _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings });
-    _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings });
-}
-
-```
 ### Version 2.0
 #### Support for more than two lists
 It is possible to use more than two lists from version 2.0.
@@ -305,10 +276,55 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHand
 ```
 The default implementation of this class supports rearranging items for each class (`ListArrangeItems`) and moving items from one list to another (`ListMoveItem`).  
 For special cases, you can override any function.
+
 #### Multiple selection
-If you need to move more than one item, this is also possible.
-You can find pictures and detailed description in section [Behaviour](https://github.com/SortableJS/Sortable/wiki/Dragging-Multiple-Items-in-Sortable).
+If you need to move more than one item, this is also possible. You can find pictures and detailed description in section [Behaviour](https://github.com/SortableJS/Sortable/wiki/Dragging-Multiple-Items-in-Sortable). All selected items will be moved to the list at once, in their original list order, and the selected state will be cleared after the drop.
 You can select and deselect items using the left mouse button by default. It is also possible to define an additional key for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.
+
+---
+
+### Properties of the `SortableListSettings` Class
+How to use settings in Dumb UI mode.
+*Razor*
+```html
+<SortableList Id="MyListId" GroupModel="@_group" Context="item">
+    <SortableItemTemplate>
+        <div class="has-background-blazor has-cursor-grab">
+            <p>@item.Name</p>
+        </div>
+    </SortableItemTemplate>
+</SortableList>
+```
+*Code behind*
+```csharp
+MySortableListGroup _group;
+
+protected override async Task OnInitializedAsync()
+{
+    await base.OnInitializedAsync();
+
+    SortableListSettings settings = new SortableListSettings() { CloneMode = true };
+    _group = new MySortableListGroup(ListId1, ListId2, () => StateHasChanged());
+    _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings });
+    _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings });
+}
+```
+
+Table of all the settings you can make:
+
+
+|Name| Similar name for Component | Type | Default|Ver.|Description|
+|---|------|------|--------|---|-----------|
+|CloneMode|Pull|Boolean|false|1.2|Used when you want to clone elments into a list instead of moving them. |
+|AllowDrop|Put|Boolean|true|1.2|Set to false to disable dropping from another list onto the current list|
+|AllowReorder|Sort|Boolean|true|1.2|Disable sorting within a list by setting to `false`|
+|CssForDragHandle|Handle|String|""|1.2|The CSS class you want the sortable to respect as the drag handle|
+|CssForDisabledItem|Filter|String|""|1.2|The CSS class you want to use to identify elements that cannot be sorted or moved|
+|AllowHtml5DragAndDrop|ForceFallback|Boolean|false|1.2|Enable HTML5 drag and drop |
+|MultiSelection|-|boolean|false|2.0|Enable mutiple selection|
+|AddToSelectionKey|-|string|null|2.0|Define custom key for mutiple selection|
+|AvoidImplicitDeselect|-|boolean|false|2.0|By default, if you press outside the list box, the selection is removed. To prevent this, set it to true|
+
 
 ## Update Notes
 Sometimes, when updating the software, the browser used an old version of JavaScript from the cache.
