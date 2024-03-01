@@ -9,11 +9,11 @@ Fork an implementation of the [SortableJS library](https://sortablejs.github.io/
 > Current version supports one or two lists.
 
 Great implementation, but I would like to make some changes:
-- extract package
-- use .NET 8.0 project style for Demo application
-- I am thinking of an architecture/usability improvement.
-- add support for multiple lists
-- implement some of the missing functionality from the JS library.
+- extract package (done)
+- use .NET 8.0 project style for Demo application (done)
+- I am thinking of an architecture/usability improvement. (done)
+- add support for multiple lists (done)
+- implement some of the missing functionality from the JS library. (multi selection added)
 
 > The latest changes will appear first on the development branch.
 
@@ -239,7 +239,7 @@ Both implement standard operations for single list and group of two lists (see d
 
 #### Properties of the `SortableListSettings` Class
 
-|Name| Similar name in Component | Type | Default|Ver.|Description|
+|Name| Similar name for Component | Type | Default|Ver.|Description|
 |---|------|------|--------|---|-----------|
 |CloneMode|Pull|Boolean|false|1.2|Used when you want to clone elments into a list instead of moving them. |
 |AllowDrop|Put|Boolean|true|1.2|Set to false to disable dropping from another list onto the current list|
@@ -247,6 +247,10 @@ Both implement standard operations for single list and group of two lists (see d
 |CssForDragHandle|Handle|String|""|1.2|The CSS class you want the sortable to respect as the drag handle|
 |CssForDisabledItem|Filter|String|""|1.2|The CSS class you want to use to identify elements that cannot be sorted or moved|
 |AllowHtml5DragAndDrop|ForceFallback|Boolean|false|1.2|Enable HTML5 drag and drop |
+|MultiSelection|-|boolean|false|2.0|Enable mutiple selection|
+|AddToSelectionKey|-|string|null|2.0|Define custom key for mutiple selection|
+|AvoidImplicitDeselect|-|boolean|false|2.0|By default, if you press outside the list box, the selection is removed. To prevent this, set it to true|
+
 
 Example of how to use the settings
 ```csharp
@@ -264,7 +268,8 @@ protected override async Task OnInitializedAsync()
 
 ```
 ### Version 2.0
-From this version it is possible to use more than two lists.
+#### Support for more than two lists
+It is possible to use more than two lists from version 2.0.
 ![image](docu/images/kanban-board.png)  
 I decided to replace the old `TwoSortableListGroup` class with the new `MultiSortableListGroup` class to provide that functionality.
 
@@ -300,6 +305,10 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListHand
 ```
 The default implementation of this class supports rearranging items for each class (`ListArrangeItems`) and moving items from one list to another (`ListMoveItem`).  
 For special cases, you can override any function.
+#### Multiple selection
+If you need to move more than one item, this is also possible.
+You can find pictures and detailed description in section [Behaviour](https://github.com/SortableJS/Sortable/wiki/Dragging-Multiple-Items-in-Sortable).
+You can select and deselect items using the left mouse button by default. It is also possible to define an additional key for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.
 
 ## Update Notes
 Sometimes, when updating the software, the browser used an old version of JavaScript from the cache.
