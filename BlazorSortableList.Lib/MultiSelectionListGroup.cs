@@ -7,7 +7,7 @@ public class MultiSelectionListGroup<T> : MultiSortableListGroup<T>, ISortableLi
     {
     }
 
-    public bool HandleDeselect(string fromId, int index)
+    public virtual bool HandleDeselect(string fromId, int index)
     {
         bool ret = false;
         var items = GetModel(fromId)?.Items;
@@ -24,7 +24,7 @@ public class MultiSelectionListGroup<T> : MultiSortableListGroup<T>, ISortableLi
         return ret;
     }
 
-    public bool HandleSelect(string fromId, int index)
+    public virtual bool HandleSelect(string fromId, int index)
     {
         bool ret = false;
         var items = GetModel(fromId)?.Items;
@@ -105,7 +105,7 @@ public class MultiSelectionListGroup<T> : MultiSortableListGroup<T>, ISortableLi
         }
     }
 
-    private static List<T> CutSelected(IList<T> items)
+    protected static List<T> CutSelected(IList<T> items)
     {
         var selected = new List<T>();
         for (int i = 0; i < items.Count;)
@@ -125,12 +125,12 @@ public class MultiSelectionListGroup<T> : MultiSortableListGroup<T>, ISortableLi
         return selected;
     }
 
-    private static List<T> GetSelected(IList<T> items1)
+    protected static List<T> GetSelected(IList<T> items)
     {
         var selected = new List<T>();
-        for (int i = 0; i < items1.Count; i++)
+        for (int i = 0; i < items.Count; i++)
         {
-            var item = items1[i];
+            var item = items[i];
             if (item.Selected)
             {
                 selected.Add(item);
