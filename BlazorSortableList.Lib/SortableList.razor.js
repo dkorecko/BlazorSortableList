@@ -1,7 +1,8 @@
 export function init(id, group, pull, put, sort, handle, filter, component, forceFallback, cssForSelection, multiDragKey, avoidImplicitDeselect) {
 
+    const DEBUG_MODE = false;
+
     let multiDrag = (typeof cssForSelection !== 'undefined');
-    console.log(multiDragKey);
 
     var sortable = new Sortable(document.getElementById(id), {
         animation: 200,
@@ -16,13 +17,15 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
         handle: handle || undefined,
 
         multiDrag: multiDrag,
-        selectedClass:cssForSelection,
+        selectedClass: cssForSelection,
         multiDragKey: multiDragKey,
         avoidImplicitDeselect: avoidImplicitDeselect,
 
         onUpdate: (event) => {
-            console.log("onUpdate:");
-            console.log(event);
+            if (DEBUG_MODE) {
+                console.log("onUpdate:");
+                console.log(event);
+            }
 
 
             let newIndex = event.newDraggableIndex;
@@ -44,13 +47,6 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 oldIndicies.forEach((item) => {
                     event.to.insertBefore(item.multiDragElement, event.to.childNodes[item.index]);
                 });
-                //oldIndicies.forEach((item) => event.from.insertBefore(Node(item.multiDragElement), item.index));
-                //oldIndicies.forEach((item) => event.from.insertBefore(Node(item.multiDragElement), event.from.childNodes[item.index]));
-
-                //oldIndicies.forEach((item) => {
-                //    const newNode = event.from.ownerDocument.importNode(item.multiDragElement, true);
-                //    event.from.insertBefore(newNode, event.from.childNodes[item.index]);
-                //});
             } else {
                 event.item.remove();
                 event.to.insertBefore(event.item, event.to.childNodes[event.oldIndex]);
@@ -60,11 +56,14 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 event.oldDraggableIndex,
                 newIndex,
                 event.from.id
-                );
+            );
         },
         onRemove: (event) => {
-            console.log("onRemove:");
-            console.log(event);
+            if (DEBUG_MODE) {
+                console.log("onRemove:");
+                console.log(event);
+            }
+
             if (event.pullMode === 'clone') {
                 // Remove the clone
                 event.clone.remove();
@@ -80,7 +79,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 newIndicies.forEach((item) => {
                     event.to.removeChild(item.multiDragElement);
                     // remove selection???
-                    
+
                 });
 
                 let oldIndicies = Array.from(event.oldIndicies);
@@ -101,23 +100,32 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 event.to.id);
         },
         onSelect: (event) => {
-            console.log("onSelect:");
+            if (DEBUG_MODE) {
+                console.log("onSelect:");
+                console.log(event);
+            }
+
             let children = Array.from(event.from.childNodes);
-            console.log(event);
-            console.log(children);
             let index = children.indexOf(event.item);
-            console.log(index);
+            if (DEBUG_MODE) {
+                //console.log(children);
+                console.log(index);
+            }
 
             // Notify .NET to update its model and re-render
             component.invokeMethodAsync('OnSelectJS', event.from.id, index);
         },
         onDeselect: (event) => {
-            console.log("onDeselect:");
-            console.log(event);
+            if (DEBUG_MODE) {
+                console.log("onDeselect:");
+                console.log(event);
+            }
 
             let children = Array.from(event.from.childNodes);
             let index = children.indexOf(event.item);
-            console.log(index);
+            if (DEBUG_MODE) {
+                console.log(index);
+            }
 
             // Notify .NET to update its model and re-render
             component.invokeMethodAsync('OnDeselectJS', event.from.id, index);
