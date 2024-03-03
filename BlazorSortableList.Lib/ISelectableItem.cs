@@ -1,4 +1,4 @@
-﻿namespace BlazorSortableList.DemoApp.Client.Models;
+﻿namespace BlazorSortableList;
 
 public interface ISelectableItem
 {

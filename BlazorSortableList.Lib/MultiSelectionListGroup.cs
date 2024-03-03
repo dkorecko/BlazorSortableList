@@ -1,4 +1,4 @@
-﻿namespace BlazorSortableList.DemoApp.Client.Models;
+﻿namespace BlazorSortableList;
 
 public class MultiSelectionListGroup<T> : MultiSortableListGroup<T>, ISortableListSelection where T : ISelectableItem
 {
