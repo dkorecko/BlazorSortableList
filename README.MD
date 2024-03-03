@@ -123,8 +123,9 @@ All properties are optional and have default values.
 |DefaultSort|Boolean|false|1.1|Enable simplified use by setting to `true`.|
 |GroupModel|ISortableListGroup<T>|false|1.2|[Data management class](https://github.com/AlexNek/BlazorSortableList#version-12)|
 
+
 > **Note:** Pay attention to the fact that you have to declare the handle in your code. You can only drag an item using the handle. 
-> For this example, you need to set `Handle` to ".drag-handle". 
+> For this example, you need to set `Handle` to `.drag-handle`. 
 
   ``` html
     <div class="has-cursor-grab">
@@ -279,8 +280,29 @@ For special cases, you can override any function.
 
 #### Multiple selection
 If you need to move more than one item, this is also possible. You can find pictures and detailed description in section [Behaviour](https://github.com/SortableJS/Sortable/wiki/Dragging-Multiple-Items-in-Sortable). All selected items will be moved to the list at once, in their original list order, and the selected state will be cleared after the drop.
-You can select and deselect items using the left mouse button by default. It is also possible to define an additional key for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.
+You can select and deselect items using the left mouse button by default. It is also possible to define an additional key (`AddToSelectionKey`) for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.
+For using multiple selection there is a new support class: `MultiSelectionListGroup<T>` where T must be inherited from `ISelectableItem`.
 
+```csharp
+public class Item : ISelectableItem
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = "";
+
+    public bool Disabled { get; set; } = false;
+
+    public bool Selected { get; set; } = false;
+}
+
+internal class CustomMultiSelectionListGroup : MultiSelectionListGroup<Item>
+{
+    public CustomMultiSelectionListGroup(Action refreshComponent)
+        : base(refreshComponent)
+    {
+    }
+}
+```
 ---
 
 ### Properties of the `SortableListSettings` Class
@@ -331,7 +353,7 @@ Sometimes, when updating the software, the browser used an old version of JavaSc
 If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console, Network tab. Then select "Disable Cache" and refresh the page.
 
 ## History
-V2.0 - **Breaking changes!** added support for miltiply lists.  
+V2.0 - **Breaking changes!** added support for miltiply lists. Mutiple selection possible too.   
 V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
 V1.0 - orignal component
