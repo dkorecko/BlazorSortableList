@@ -5,15 +5,15 @@ Fork an implementation of the [SortableJS library](https://sortablejs.github.io/
 - [View Demos .NET7 web assembly](https://mango-flower-090e9130f.4.azurestaticapps.net/)
 - [View Youtube demonstration](https://www.youtube.com/watch?v=DdsD1j8a-DA)
 
-> Original JS library has more features as implemented now - Not easy or not possible to implement.  
+> Original JS library has more features as implemented now.  
 > Current version supports one or two lists.
 
 Great implementation, but I would like to make some changes:
-- extract package (done)
-- use .NET 8.0 project style for Demo application (done)
-- I am thinking of an architecture/usability improvement. (done)
-- add support for multiple lists (done)
-- implement some of the missing functionality from the JS library. (multi selection added)
+- extract package (done).
+- use .NET 8.0 project style for Demo application (done).
+- I am thinking of an architecture/usability improvement (done).
+- add support for multiple lists (done).
+- implement some of the missing functionality from the JS library (multi selection added).
 
 > The latest changes will appear first on the development branch.
 
@@ -241,7 +241,7 @@ Both implement standard operations for single list and group of two lists (see d
 
 ### Version 2.0
 #### Support for more than two lists
-It is possible to use more than two lists from version 2.0.
+It is possible to use more than two lists.
 ![image](docu/images/kanban-board.png)  
 I decided to replace the old `TwoSortableListGroup` class with the new `MultiSortableListGroup` class to provide that functionality.
 
@@ -280,9 +280,8 @@ For special cases, you can override any function.
 
 #### Multiple selection
 If you need to move more than one item, this is also possible. You can find pictures and detailed description in section [Behaviour](https://github.com/SortableJS/Sortable/wiki/Dragging-Multiple-Items-in-Sortable). All selected items will be moved to the list at once, in their original list order, and the selected state will be cleared after the drop.
-You can select and deselect items using the left mouse button by default. It is also possible to define an additional key (`AddToSelectionKey`) for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.
-For using multiple selection there is a new support class: `MultiSelectionListGroup<T>` where T must be inherited from `ISelectableItem`.
-
+You can select and deselect items using the left mouse button by default. It is also possible to define an additional key (`AddToSelectionKey`) for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.  
+For using multiple selection there is a new support class: `MultiSelectionListGroup<T>` where T must be inherited from `ISelectableItem`.With this class, it is possible to use a single selection and a multiple selection with one or more lists.
 ```csharp
 public class Item : ISelectableItem
 {
@@ -306,7 +305,7 @@ internal class CustomMultiSelectionListGroup : MultiSelectionListGroup<Item>
 ---
 
 ### Properties of the `SortableListSettings` Class
-How to use settings in Dumb UI mode.
+How to use settings in Dumb UI mode.  
 *Razor*
 ```html
 <SortableList Id="MyListId" GroupModel="@_group" Context="item">
@@ -350,10 +349,10 @@ Table of all the settings you can make:
 
 ## Update Notes
 Sometimes, when updating the software, the browser used an old version of JavaScript from the cache.
-If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console, Network tab. Then select "Disable Cache" and refresh the page.
+If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console/Network tab. Then select "Disable Cache" and refresh the page.
 
 ## History
-V2.0 - **Breaking changes!** added support for miltiply lists. Mutiple selection possible too.   
+V2.0 - **Breaking changes!** Added support for multiple lists. Multiple selections possible too.   
 V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
 V1.0 - orignal component
