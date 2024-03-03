@@ -1,28 +1,49 @@
-﻿
-namespace BlazorSortableList.DemoApp.Client.Models;
-internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortableListSelection
+﻿namespace BlazorSortableList.DemoApp.Client.Models;
+
+public class MultiSelectionListGroup<T> : MultiSortableListGroup<T>, ISortableListSelection where T : ISelectableItem
 {
     public MultiSelectionListGroup(Action refreshComponent)
         : base(refreshComponent)
     {
     }
 
-    protected override void ListArrangeItems(int oldIndex, int newIndex, IList<Item> items)
+    public bool HandleDeselect(string fromId, int index)
     {
-        var selected = new List<Item>();
-        for (int i = 0; i < items.Count;)
+        bool ret = false;
+        var items = GetModel(fromId)?.Items;
+        if (items != null && index >= 0 && index < items.Count)
         {
-            var item1 = items[i];
-            if (item1.Selected)
+            T item = items[index];
+            if (item.Selected)
             {
-                selected.Add(item1);
-                items.RemoveAt(i);
-            }
-            else
-            {
-                i++;
+                item.Selected = false;
+                ret = true;
             }
         }
+
+        return ret;
+    }
+
+    public bool HandleSelect(string fromId, int index)
+    {
+        bool ret = false;
+        var items = GetModel(fromId)?.Items;
+        if (items != null && index >= 0 && index < items.Count)
+        {
+            T item = items[index];
+            if (!item.Selected)
+            {
+                item.Selected = true;
+                ret = true;
+            }
+        }
+
+        return ret;
+    }
+
+    protected override void ListArrangeItems(int oldIndex, int newIndex, IList<T> items)
+    {
+        List<T> selected = CutSelected(items);
 
         if (selected.Any())
         {
@@ -48,16 +69,11 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
         {
             base.ListArrangeItems(oldIndex, newIndex, items);
         }
-
-        //foreach (var item in selected)
-        //{
-        //    items.Remove(item);
-        //}
     }
 
-    protected override void ListMoveItem(int oldIndex, int newIndex, IList<Item> items1, IList<Item> items2)
+    protected override void ListMoveItem(int oldIndex, int newIndex, IList<T> items1, IList<T> items2)
     {
-        List<Item> selected = GetSelected(items1);
+        List<T> selected = GetSelected(items1);
 
         if (selected.Any())
         {
@@ -89,9 +105,29 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
         }
     }
 
-    private static List<Item> GetSelected(IList<Item> items1)
+    private static List<T> CutSelected(IList<T> items)
     {
-        var selected = new List<Item>();
+        var selected = new List<T>();
+        for (int i = 0; i < items.Count;)
+        {
+            var item1 = items[i];
+            if (item1.Selected)
+            {
+                selected.Add(item1);
+                items.RemoveAt(i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+
+        return selected;
+    }
+
+    private static List<T> GetSelected(IList<T> items1)
+    {
+        var selected = new List<T>();
         for (int i = 0; i < items1.Count; i++)
         {
             var item = items1[i];
@@ -102,39 +138,5 @@ internal class MultiSelectionListGroup : MultiSortableListGroup<Item>, ISortable
         }
 
         return selected;
-    }
-
-    public bool HandleSelect(string fromId, int index)
-    {
-        bool ret = false;
-        var items = GetModel(fromId)?.Items;
-        if (items != null && index >= 0 && index < items.Count)
-        {
-            Item item = items[index];
-            if (!item.Selected)
-            {
-                item.Selected = true;
-                ret = true;
-            }
-        }
-
-        return ret;
-    }
-
-    public bool HandleDeselect(string fromId, int index)
-    {
-        bool ret = false;
-        var items = GetModel(fromId)?.Items;
-        if (items != null && index >= 0 && index < items.Count)
-        {
-            Item item = items[index];
-            if (item.Selected)
-            {
-                item.Selected = false;
-                ret = true;
-            }
-        }
-
-        return ret;
     }
 }

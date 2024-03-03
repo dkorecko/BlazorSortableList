@@ -1,12 +1,16 @@
+using BlazorSortableList.DemoApp.Client.Models;
+
 namespace BlazorSortableList.DemoApp.Client;
 
 
-public class Item
+public class Item : ISelectableItem
 {
     public int Id { get; set; }
+
     public string Name { get; set; } = "";
 
     public bool Disabled { get; set; } = false;
+
     public bool Selected { get; set; } = false;
 
     public Item Clone()

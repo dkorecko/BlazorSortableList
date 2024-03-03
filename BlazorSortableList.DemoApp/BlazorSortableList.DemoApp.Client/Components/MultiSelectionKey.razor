@@ -95,12 +95,12 @@
 
     public List<Item> items2 = Enumerable.Range(11, 10).Select(i => new Item { Id = i, Name = $"Item {i}" }).ToList();
 
-    MultiSelectionListGroup _group;
+    CustomMultiSelectionListGroup _group;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _group = new MultiSelectionListGroup(RefreshControl);
+        _group = new CustomMultiSelectionListGroup(RefreshControl);
 
         var settings = new SortableListSettings() { MultiSelection = true, CssForSelection = "selected", AddToSelectionKey = "alt" };
 
