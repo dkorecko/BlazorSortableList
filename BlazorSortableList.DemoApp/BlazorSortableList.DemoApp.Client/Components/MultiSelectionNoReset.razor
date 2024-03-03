@@ -9,12 +9,12 @@
 </style>
 
 <div class="container">
-    <h1 class="title is-size-1 has-text-centered">Multiple selection with alt key</h1>
+    <h1 class="title is-size-1 has-text-centered">Multiple selection without deselection</h1>
     <p class="mb-4">
         Multiple-selection shared lists are lists where one or more items can be dragged from one list to another and vice versa.
         Providing the same "Group" string name for both lists is what links them together. 
     </p>
-    <p>Press <strong>Alt</strong> key to select additional item</p>
+    <p>The selection is not cleared if you select items and then press outside the list box.</p>
    
    <XTabs>
            <XTab Title="Example">
@@ -47,9 +47,9 @@
 </div>
 
 @code {
-    private const string ListId1 = "SharedKeyListId1";
-    private const string ListId2 = "SharedKeyListId2";
-    private const string GroupId = "CommonGroupKey";
+    private const string ListId1 = "SharedNCSListId1";
+    private const string ListId2 = "SharedNCSListId2";
+    private const string GroupId = "CommonGroupNCS";
 
     private string codeContent1 = @"
     <SortableList Id=""@ListId1"" GroupModel=""@_group"" Context=""item"">
@@ -68,9 +68,9 @@
     </SortableList>
 
     @code {
-        private const string ListId1 = ""SharedKeyListId1"";
-        private const string ListId2 = ""SharedKeyListId2"";
-        private const string GroupId = ""CommonGroupKey"";
+        private const string ListId1 = ""SharedNCSListId1"";
+        private const string ListId2 = ""SharedNCSListId2"";
+        private const string GroupId = ""CommonGroupNCS"";
 
         public List<Item> items1 = Enumerable.Range(1, 10).Select(i => new Item { Id = i, Name = $""Item {i}"" }).ToList();
 
@@ -83,7 +83,7 @@
             await base.OnInitializedAsync();
             _group = new MultiSelectionListGroup(RefreshControl);
 
-            var settings = new SortableListSettings() { MultiSelection = true, CssForSelection = ""selected"", AddToSelectionKey = ""alt"" };
+             var settings = new SortableListSettings() { MultiSelection = true, AvoidImplicitDeselect = true};
             _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings});
             _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings});
         }
@@ -102,7 +102,7 @@
         await base.OnInitializedAsync();
         _group = new CustomMultiSelectionListGroup(RefreshControl);
 
-        var settings = new SortableListSettings() { MultiSelection = true, CssForSelection = "selected", AddToSelectionKey = "alt" };
+        var settings = new SortableListSettings() { MultiSelection = true, AvoidImplicitDeselect = true};
 
         _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId, Settings = settings});
         _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId, Settings = settings});
