@@ -4,7 +4,39 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
 
     let multiDrag = (typeof cssForSelection !== 'undefined');
 
-    var sortable = new Sortable(document.getElementById(id), {
+    let htmlElement = document.getElementById(id);
+
+    //new Sortable(htmlElement,
+    //    {
+    //        multiDrag: true,
+    //        selectedClass: 'selected',
+    //        group: 'shared2alex', // set both lists to same group
+    //        animation: 150,
+    //        onUpdate: (event) => {
+    //            console.log("onUpdate:");
+    //            console.log(event);
+    //        },
+    //        onRemove: (event) => {
+    //            console.log("onRemove:");
+    //            console.log(event);
+    //        },
+    //        onSelect: (event) => {
+    //            console.log("onSelect:");
+    //            console.log(event);
+    //            let children = Array.from(event.from.children);
+    //            let index = children.indexOf(event.item);
+    //            console.log(index);
+    //        },
+    //        onDeselect: (event) => {
+    //            console.log("onDeselect:");
+    //            console.log(event);
+    //            let children = Array.from(event.to.children);
+    //            let index = children.indexOf(event.item);
+    //            console.log(index);
+    //        }
+    //    });
+
+    var sortable = new Sortable(htmlElement, {
         animation: 200,
         group: {
             name: group,
@@ -36,10 +68,10 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
 
                 // Revert the DOM to match the .NET state
                 newIndicies.forEach((item) => {
+                    //remove selection first
+                    Sortable.utils.deselect(item.multiDragElement);
+
                     event.from.removeChild(item.multiDragElement);
-                    // remove selection
-                    //toggleClass(item.multiDragElement, cssForSelection, false);
-                    //sortable.utils.deselect(item.multiDragElement);
 
                 });
 
@@ -70,6 +102,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
             }
 
             let newIndex = event.newDraggableIndex;
+
             // in multi selection mode we have newIndicies only
             let newIndicies = Array.from(event.newIndicies);
             if (newIndicies.length > 0) {
@@ -77,9 +110,10 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
 
                 // Revert the DOM to match the .NET state
                 newIndicies.forEach((item) => {
-                    event.to.removeChild(item.multiDragElement);
-                    // remove selection???
+                    //remove selection first
+                    Sortable.utils.deselect(item.multiDragElement);
 
+                    event.to.removeChild(item.multiDragElement);
                 });
 
                 let oldIndicies = Array.from(event.oldIndicies);
@@ -105,7 +139,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 console.log(event);
             }
 
-            let children = Array.from(event.from.childNodes);
+            let children = Array.from(event.from.children);
             let index = children.indexOf(event.item);
             if (DEBUG_MODE) {
                 //console.log(children);
@@ -121,7 +155,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 console.log(event);
             }
 
-            let children = Array.from(event.from.childNodes);
+            let children = Array.from(event.to.children);
             let index = children.indexOf(event.item);
             if (DEBUG_MODE) {
                 console.log(index);
