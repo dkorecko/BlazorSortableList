@@ -281,7 +281,10 @@ For special cases, you can override any function.
 #### Multiple selection
 If you need to move more than one item, this is also possible. You can find pictures and detailed description in section [Behaviour](https://github.com/SortableJS/Sortable/wiki/Dragging-Multiple-Items-in-Sortable). All selected items will be moved to the list at once, in their original list order, and the selected state will be cleared after the drop.
 You can select and deselect items using the left mouse button by default. It is also possible to define an additional key (`AddToSelectionKey`) for multiple selection. In this case, it is possible to select an item with the mouse and it is possible to select another item by pressing the defined button.  
-For using multiple selection there is a new support class: `MultiSelectionListGroup<T>` where T must be inherited from `ISelectableItem`.With this class, it is possible to use a single selection and a multiple selection with one or more lists.
+For using multiple selection there is a new support class: `MultiSelectionListGroup<T>` where T must be inherited from `ISelectableItem`.With this class, it is possible to use a single selection and a multiple selection with one or more lists.  
+
+> **Note**: When working with multiple selections, there are some errors that I cannot explain now. I received unexpected result from `Sortable JS` event.
+
 ```csharp
 public class Item : ISelectableItem
 {
@@ -352,7 +355,7 @@ Sometimes, when updating the software, the browser used an old version of JavaSc
 If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console/Network tab. Then select "Disable Cache" and refresh the page.
 
 ## History
-V2.0 - **Breaking changes!** Added support for multiple lists. Multiple selections possible too.   
+V2.0 - **Breaking changes!** Added support for multiple lists. Multiple selections possible too (as Beta version).   
 V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
 V1.0 - orignal component
