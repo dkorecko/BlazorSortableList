@@ -54,6 +54,10 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListItem
             // add it to the new index in list 2
             items2.Insert(newIndex, item);
         }
+        else
+        {
+            items2.Add(item);
+        }
 
         // remove the item from the old index in list 1
         items1.RemoveAt(oldIndex);
