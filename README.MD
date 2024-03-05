@@ -18,10 +18,10 @@ Great implementation, but I would like to make some changes:
 > The latest changes will appear first on the development branch.
 
 
-Compare current implementation with original version:
+Compare current implementation with original version (.NET 7):
 - [View Demos .NET8 server prerendering](https://blazorsortablelistdemoapp2024.azurewebsites.net/)
 
-
+>**Note**: If you are using two or more lists, and one of the lists is empty, then drop the item near the top of the empty list.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ Compare current implementation with original version:
 ## Running Locally
 
 1. Clone this repository.
-1. Run the project 'BlazorSortableList.DemoApp' using `dotnet watch`.
+1. Run the project 'BlazorSortableList.DemoApp' 
 
 ## How to use it in your own project
 
@@ -284,6 +284,7 @@ You can select and deselect items using the left mouse button by default. It is 
 For using multiple selection there is a new support class: `MultiSelectionListGroup<T>` where T must be inherited from `ISelectableItem`.With this class, it is possible to use a single selection and a multiple selection with one or more lists.  
 
 > **Note**: It is not so easy to synchronise JS and blazor state for multiple selection. So the selection will be cleared after you drop the selected items.
+> Don't click too quickly when selecting. Under certain circumstances, the selection may be erased.
 
 ```csharp
 public class Item : ISelectableItem
