@@ -2,9 +2,9 @@
 
 public class SortableListModel<T>: ISortableListModel<T>
 {
-    protected List<T> _items;
+    protected IList<T> _items;
 
-    public SortableListModel(List<T> items)
+    public SortableListModel(IList<T> items)
     {
         _items = items;
     }
