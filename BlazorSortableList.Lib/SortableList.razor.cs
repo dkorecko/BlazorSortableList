@@ -58,6 +58,8 @@ namespace BlazorSortableList
 
         [Parameter]
         public bool Sort { get; set; } = true;
+        [Parameter]
+        public string? Style { get; set; }
 
         [Parameter]
         public RenderFragment<T>? SortableItemTemplate { get; set; }
