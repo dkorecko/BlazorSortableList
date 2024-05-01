@@ -1,0 +1,23 @@
+﻿<div class="card has-border-light has-background-blazor1">
+    <p class="is-size-4 p-2 ml-4">@Item.Name</p>
+    @if (Item.Children != null)
+    {
+        <SortableList Id="@($"{NestedIdPrefix}{Item.Id}")" GroupModel="@GroupModel" Context="child" Style="margin:0.5rem">
+            <SortableItemTemplate>
+                <SortableListNested NestedIdPrefix="@NestedIdPrefix" Item="child" GroupModel="@GroupModel"/>
+            </SortableItemTemplate>
+        </SortableList>
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public NestedItem Item { get; set; }
+
+    [Parameter]
+    public string NestedIdPrefix { get; set; }
+
+    [Parameter]
+    public ISortableListGroup<NestedItem>? GroupModel { get; set; }
+}

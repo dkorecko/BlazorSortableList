@@ -1,0 +1,147 @@
+﻿@using BlazorSortableList.DemoApp.Client.Models
+@using BlazorXTabs
+
+<style>
+    /*  .sortable-ghost {
+                background-color: white;
+                border: 1px solid green;
+                opacity: 1;
+            } */
+
+    .sortable-chosen {
+        opacity: 0.7;
+        border: 1px dotted red;
+    }
+</style>
+
+<div class="container">
+    <h1 class="title is-size-1 has-text-centered">Simple Nested Lists</h1>
+    <p class="mb-4">You can rearrange items within each level and drag items between levels.</p>
+    <XTabs>
+        <XTab Title="Example">
+            <div class="columns" style="width: 98%">
+                <div class="column" style="background-color: #00bfff;">
+                    <SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
+                        <SortableItemTemplate>
+                            <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
+
+@*                             <div class="card has-border-light has-background-blazor1">
+                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                @if (item.Children != null)
+                                {
+                                    <SortableList Id="@($"{ListIdNested}{item.Id}")" GroupModel="@_group" Context="item2" Style="margin: 0.5rem">
+                                        <SortableItemTemplate>
+                                            <div class="card has-border-light has-background-blazor1">
+                                                <p class="is-size-4 p-2 ml-4">@item2.Name</p>
+                                            </div>
+                                        </SortableItemTemplate>
+                                    </SortableList>
+                                }
+                            </div>
+ *@                        </SortableItemTemplate>
+                    </SortableList>
+                </div>
+            </div>
+        </XTab>
+        <XTab Title="Code">
+            <pre>@codeContent1</pre>
+        </XTab>
+    </XTabs>
+
+
+</div>
+@code {
+    private const string ListIdRoot = "NestedListIdRoot";
+    private const string ListIdNested = "NestedListId";
+    private const string GroupId = "BoardGroup";
+
+    private string codeContent1 = @"@* Simplified version! *@
+    To Do
+    <SortableList Id=""@ListId1"" GroupModel=""@_group"" Context=""item"">
+        <SortableItemTemplate>
+            <div>
+                <p>@item.Name</p>
+            </div>
+        </SortableItemTemplate>
+    </SortableList>
+    Doing
+    <SortableList Id=""@ListId2"" GroupModel=""@_group"" Context=""item"">
+        <SortableItemTemplate>
+            <div>
+                <p>@item.Name</p>
+            </div>
+        </SortableItemTemplate>
+    </SortableList>
+    Done
+    <SortableList Id=""@ListId3"" GroupModel=""@_group"" Context=""item"">
+       <SortableItemTemplate>
+           <div>
+               <p>@item.Name</p>
+           </div>
+       </SortableItemTemplate>
+    </SortableList>
+    @code {
+        private const string ListId1 = ""BoardListId1"";
+        private const string ListId2 = ""BoardListId2"";
+        private const string ListId3 = ""BoardListId3"";
+        private const string GroupId = ""BoardGroup"";
+
+        public List<Item> items1 = ...;
+        public List<Item> items2 = ...;
+        public List<Item> items3 = ...;
+
+        ThreeSortableListGroup _group;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            _group = new ThreeSortableListGroup(() => StateHasChanged());
+            _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId });
+            _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId });
+            _group.AddModel(ListId3, new SortableListModel<Item>(items3) { Group = GroupId });
+        }
+    }
+    ";
+
+    public List<NestedItem> rootItems = Enumerable.Range(1, 5).Select(i => new NestedItem { Id = i, Name = $"Item 1.{i}" }).ToList();
+
+    public List<NestedItem> items2 = Enumerable.Range(11, 4).Select(i => new NestedItem { Id = i, Name = $"Item 2.{i}" }).ToList();
+    public List<NestedItem> items3 = Enumerable.Range(21, 4).Select(i => new NestedItem { Id = i, Name = $"Item 3.{i}" }).ToList();
+    public List<NestedItem> items4 = Enumerable.Range(31, 4).Select(i => new NestedItem { Id = i, Name = $"Item 4.{i}" }).ToList();
+
+    NestedSortableListGroup _group;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _group = new NestedSortableListGroup(() => StateHasChanged());
+        items2[1].Children = items3;
+        rootItems[0].Children = items2;
+        rootItems[3].Children = items4;
+
+        _group.AddModel(ListIdRoot, new SortableListModel<NestedItem>(rootItems) { Group = GroupId });
+        foreach (var item in rootItems)
+        {
+            if (item.Children != null)
+            {
+                AddNestedModel(item, 1);
+            }
+        }
+    }
+
+    private void AddNestedModel(NestedItem item, int level)
+    {
+        if (item.Children != null)
+        {
+            //_group.AddModel($"{ListIdNested}-{level}.{item.Id}", new SortableListModel<NestedItem>(item.Children) { Group = GroupId });
+            _group.AddModel($"{ListIdNested}{item.Id}", new SortableListModel<NestedItem>(item.Children) { Group = GroupId });
+            foreach (var child in item.Children)
+            {
+                if (child.Children != null)
+                {
+                    AddNestedModel(child, level + 1);
+                }
+            }
+        }
+    }
+}
