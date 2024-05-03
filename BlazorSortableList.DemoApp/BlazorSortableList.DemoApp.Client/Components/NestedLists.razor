@@ -3,10 +3,10 @@
 
 <style>
     /*  .sortable-ghost {
-                background-color: white;
-                border: 1px solid green;
-                opacity: 1;
-            } */
+                    background-color: white;
+                    border: 1px solid green;
+                    opacity: 1;
+                } */
 
     .sortable-chosen {
         opacity: 0.7;
@@ -24,21 +24,7 @@
                     <SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
-
-@*                             <div class="card has-border-light has-background-blazor1">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
-                                @if (item.Children != null)
-                                {
-                                    <SortableList Id="@($"{ListIdNested}{item.Id}")" GroupModel="@_group" Context="item2" Style="margin: 0.5rem">
-                                        <SortableItemTemplate>
-                                            <div class="card has-border-light has-background-blazor1">
-                                                <p class="is-size-4 p-2 ml-4">@item2.Name</p>
-                                            </div>
-                                        </SortableItemTemplate>
-                                    </SortableList>
-                                }
-                            </div>
- *@                        </SortableItemTemplate>
+                        </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>
@@ -56,49 +42,57 @@
     private const string GroupId = "BoardGroup";
 
     private string codeContent1 = @"@* Simplified version! *@
-    To Do
-    <SortableList Id=""@ListId1"" GroupModel=""@_group"" Context=""item"">
+
+    <SortableList Id=""@ListIdRoot"" GroupModel=""@_group"" Context=""item"">
         <SortableItemTemplate>
-            <div>
-                <p>@item.Name</p>
-            </div>
+            <SortableListNested NestedIdPrefix=""@ListIdNested"" Item=""item"" GroupModel=""@_group"" />
         </SortableItemTemplate>
-    </SortableList>
-    Doing
-    <SortableList Id=""@ListId2"" GroupModel=""@_group"" Context=""item"">
-        <SortableItemTemplate>
-            <div>
-                <p>@item.Name</p>
-            </div>
-        </SortableItemTemplate>
-    </SortableList>
-    Done
-    <SortableList Id=""@ListId3"" GroupModel=""@_group"" Context=""item"">
-       <SortableItemTemplate>
-           <div>
-               <p>@item.Name</p>
-           </div>
-       </SortableItemTemplate>
     </SortableList>
     @code {
-        private const string ListId1 = ""BoardListId1"";
-        private const string ListId2 = ""BoardListId2"";
-        private const string ListId3 = ""BoardListId3"";
+        private const string ListIdRoot = ""NestedListIdRoot"";
+        private const string ListIdNested = ""NestedListId"";
         private const string GroupId = ""BoardGroup"";
 
         public List<Item> items1 = ...;
         public List<Item> items2 = ...;
         public List<Item> items3 = ...;
+        public List<Item> items3 = ...;
 
         ThreeSortableListGroup _group;
 
+         _group = new NestedSortableListGroup(() => StateHasChanged());
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _group = new ThreeSortableListGroup(() => StateHasChanged());
-            _group.AddModel(ListId1, new SortableListModel<Item>(items1) { Group = GroupId });
-            _group.AddModel(ListId2, new SortableListModel<Item>(items2) { Group = GroupId });
-            _group.AddModel(ListId3, new SortableListModel<Item>(items3) { Group = GroupId });
+            _group = new NestedSortableListGroup(() => StateHasChanged());
+            items2[1].Children = items3;
+            rootItems[0].Children = items2;
+            rootItems[3].Children = items4;
+            var settings = new SortableListSettings() { FallbackOnBody = true, SwapThreshold = 0.65 };
+
+            _group.AddModel(ListIdRoot, new SortableListModel<NestedItem>(rootItems) { Group = GroupId, Settings = settings });
+            foreach (var item in rootItems)
+            {
+                if (item.Children != null)
+                {
+                    AddNestedModel(item, settings);
+                }
+            }
+        }
+
+        private void AddNestedModel(NestedItem item, SortableListSettings settings)
+        {
+            if (item.Children != null)
+            {
+                _group.AddModel($""{ListIdNested}{item.Id}"", new SortableListModel<NestedItem>(item.Children) { Group = GroupId, Settings = settings });
+                foreach (var child in item.Children)
+                {
+                    if (child.Children != null)
+                    {
+                        AddNestedModel(child, settings);
+                    }
+                }
+            }
         }
     }
     ";
@@ -118,28 +112,29 @@
         items2[1].Children = items3;
         rootItems[0].Children = items2;
         rootItems[3].Children = items4;
+        var settings = new SortableListSettings() { FallbackOnBody = true, SwapThreshold = 0.65 };
 
-        _group.AddModel(ListIdRoot, new SortableListModel<NestedItem>(rootItems) { Group = GroupId });
+        _group.AddModel(ListIdRoot, new SortableListModel<NestedItem>(rootItems) { Group = GroupId, Settings = settings });
         foreach (var item in rootItems)
         {
             if (item.Children != null)
             {
-                AddNestedModel(item, 1);
+                AddNestedModel(item, settings);
             }
         }
     }
 
-    private void AddNestedModel(NestedItem item, int level)
+    private void AddNestedModel(NestedItem item, SortableListSettings settings)
     {
         if (item.Children != null)
         {
             //_group.AddModel($"{ListIdNested}-{level}.{item.Id}", new SortableListModel<NestedItem>(item.Children) { Group = GroupId });
-            _group.AddModel($"{ListIdNested}{item.Id}", new SortableListModel<NestedItem>(item.Children) { Group = GroupId });
+            _group.AddModel($"{ListIdNested}{item.Id}", new SortableListModel<NestedItem>(item.Children) { Group = GroupId, Settings = settings });
             foreach (var child in item.Children)
             {
                 if (child.Children != null)
                 {
-                    AddNestedModel(child, level + 1);
+                    AddNestedModel(child, settings);
                 }
             }
         }
