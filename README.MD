@@ -306,6 +306,67 @@ internal class CustomMultiSelectionListGroup : MultiSelectionListGroup<Item>
     }
 }
 ```
+### Version 2.1  
+
+Support for nested lists added.  
+*Razor*
+```html
+<SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
+    <SortableItemTemplate>
+        <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
+    </SortableItemTemplate>
+</SortableList>
+```  
+*Code behind*
+```csharp
+private const string ListIdRoot = "NestedListIdRoot";
+private const string ListIdNested = "NestedListId";
+private const string GroupId = "BoardGroup";
+
+public List<NestedItem> rootItems = Enumerable.Range(1, 5).Select(i => new NestedItem { Id = i, Name = $"Item 1.{i}" }).ToList();
+
+public List<NestedItem> items2 = Enumerable.Range(11, 4).Select(i => new NestedItem { Id = i, Name = $"Item 2.{i}" }).ToList();
+public List<NestedItem> items3 = Enumerable.Range(21, 4).Select(i => new NestedItem { Id = i, Name = $"Item 3.{i}" }).ToList();
+public List<NestedItem> items4 = Enumerable.Range(31, 4).Select(i => new NestedItem { Id = i, Name = $"Item 4.{i}" }).ToList();
+
+NestedSortableListGroup _group;
+
+protected override async Task OnInitializedAsync()
+{
+    await base.OnInitializedAsync();
+    _group = new NestedSortableListGroup(() => StateHasChanged());
+    items2[1].Children = items3;
+    rootItems[0].Children = items2;
+    rootItems[3].Children = items4;
+    var settings = new SortableListSettings() { FallbackOnBody = true, SwapThreshold = 0.65 };
+
+    _group.AddModel(ListIdRoot, new SortableListModel<NestedItem>(rootItems) { Group = GroupId, Settings = settings });
+    foreach (var item in rootItems)
+    {
+        if (item.Children != null)
+        {
+            AddNestedModel(item, settings);
+        }
+    }
+}
+
+private void AddNestedModel(NestedItem item, SortableListSettings settings)
+{
+    if (item.Children != null)
+    {
+        _group.AddModel($"{ListIdNested}{item.Id}", new SortableListModel<NestedItem>(item.Children) { Group = GroupId, Settings = settings });
+        foreach (var child in item.Children)
+        {
+            if (child.Children != null)
+            {
+                AddNestedModel(child, settings);
+            }
+        }
+    }
+}
+```
+>**Note:** The *SortableListNested* component must be copied from the sample project and modified to suit your needs.
+
 ---
 
 ### Properties of the `SortableListSettings` Class
@@ -349,6 +410,8 @@ Table of all the settings you can make:
 |MultiSelection|-|boolean|false|2.0|Enable mutiple selection|
 |AddToSelectionKey|-|string|null|2.0|Define custom key for mutiple selection|
 |AvoidImplicitDeselect|-|boolean|false|2.0|By default, if you press outside the list box, the selection is removed. To prevent this, set it to true|
+|AvoidImplicitDeselect|-|boolean|false|2.1|True indicating whether appends the cloned DOM Element into the Document's Body allowed|
+|SwapThreshold|-|double|1.0|2.1|Threshold of the swap zone
 
 
 ## Update Notes
@@ -356,6 +419,7 @@ Sometimes, when updating the software, the browser used an old version of JavaSc
 If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console/Network tab. Then select "Disable Cache" and refresh the page.
 
 ## History
+V2.1 - added support of nested lists.
 V2.0 - **Breaking changes!** Added support for multiple lists. Multiple selections possible too.  
 V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
