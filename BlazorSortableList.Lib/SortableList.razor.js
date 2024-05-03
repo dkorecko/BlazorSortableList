@@ -1,7 +1,9 @@
-export function init(id, group, pull, put, sort, handle, filter, component, forceFallback, cssForSelection, multiDragKey, avoidImplicitDeselect) {
+export function init(id, group, pull, put, sort, handle, filter, component, forceFallback, cssForSelection, multiDragKey, avoidImplicitDeselect, fallbackOnBody, swapThreshold) {
 
-    const DEBUG_MODE = false;
-
+    const DEBUG_MODE = true;
+    if (DEBUG_MODE) {
+        console.log("Init for Id:", id, "swapThreshold:", swapThreshold);
+    }
     let multiDrag = (typeof cssForSelection !== 'undefined');
 
     let htmlElement = document.getElementById(id);
@@ -46,13 +48,14 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
         filter: filter || undefined,
         sort: sort,
         forceFallback: forceFallback,
+        fallbackOnBody: fallbackOnBody, //true,
         handle: handle || undefined,
 
         multiDrag: multiDrag,
         selectedClass: cssForSelection,
         multiDragKey: multiDragKey,
         avoidImplicitDeselect: avoidImplicitDeselect,
-
+        swapThreshold: swapThreshold, //0.65,
         onUpdate: (event) => {
             if (DEBUG_MODE) {
                 console.log("onUpdate:");

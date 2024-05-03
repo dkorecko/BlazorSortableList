@@ -19,6 +19,10 @@ namespace BlazorSortableList
 
         private bool _avoidImplicitDeselect;
 
+        private double _swapThreshold = 1.0;
+
+        private bool _fallbackOnBody = false;
+
         [Parameter]
         public bool DefaultSort { get; set; }
 
@@ -145,7 +149,22 @@ namespace BlazorSortableList
                 var module = await JS.InvokeAsync<IJSObjectReference>("import", "./_content/BlazorSortableList/SortableList.razor.js");
 
                 //await JS.InvokeVoidAsync("console.log", $"***id:{Id}, group:{Group},pull: {Pull},put:{Put},sort:{Sort}, handle:{Handle}, filter:{Filter}, forceFallback:{ForceFallback}");
-                await module.InvokeAsync<string>("init", Id, Group, Pull, Put, Sort, Handle, Filter, selfReference, ForceFallback, _cssForSelection, _multiDragKey, _avoidImplicitDeselect);
+                await module.InvokeAsync<string>(
+                    "init",
+                    Id,
+                    Group,
+                    Pull,
+                    Put,
+                    Sort,
+                    Handle,
+                    Filter,
+                    selfReference,
+                    ForceFallback,
+                    _cssForSelection,
+                    _multiDragKey,
+                    _avoidImplicitDeselect,
+                    _fallbackOnBody,
+                    _swapThreshold);
             }
         }
 
@@ -193,6 +212,11 @@ namespace BlazorSortableList
 
                             _multiDragKey ??= String.Empty;
                         }
+
+                        // actual for the nested lists
+                        _fallbackOnBody = settings.FallbackOnBody;
+                        _swapThreshold = settings.SwapThreshold;
+
                     }
                 }
             }

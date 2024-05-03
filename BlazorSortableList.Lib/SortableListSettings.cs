@@ -70,4 +70,17 @@ public class SortableListSettings
     /// </summary>
     /// <value><c>true</c> if you don't want to deselect items on outside click; otherwise, <c>false</c>.</value>
     public bool AvoidImplicitDeselect { get; set; }
+
+    /// <summary>
+    /// Gets or sets the swap threshold.
+    /// Threshold of the swap zone.
+    /// </summary>
+    /// <value>The swap threshold.</value>
+    public double SwapThreshold { get; set; } = 1.0;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether appends the cloned DOM Element into the Document's Body allowed
+    /// </summary>
+    /// <value><c>true</c> if [fallback on body]; otherwise, <c>false</c>.</value>
+    public bool FallbackOnBody { get; set; }= false;
 }
