@@ -309,6 +309,8 @@ internal class CustomMultiSelectionListGroup : MultiSelectionListGroup<Item>
 ### Version 2.1  
 
 Support for nested lists added.  
+![image](docu/images/nested-list.jpg)  
+
 *Razor*
 ```html
 <SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
