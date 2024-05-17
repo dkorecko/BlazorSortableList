@@ -45,6 +45,13 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListItem
         return false;
     }
 
+    /// <summary>
+    /// Move items between lists
+    /// </summary>
+    /// <param name="oldIndex">The old index.</param>
+    /// <param name="newIndex">The new index.</param>
+    /// <param name="items1">The items1.</param>
+    /// <param name="items2">The items2.</param>
     protected virtual void ListMoveItem(int oldIndex, int newIndex, IList<T> items1, IList<T> items2)
     {
         // get the item at the old index in list 1
@@ -63,6 +70,12 @@ public class MultiSortableListGroup<T> : SortableListGroup<T>, ISortableListItem
         items1.RemoveAt(oldIndex);
     }
 
+    /// <summary>
+    /// Arrange items within the list.
+    /// </summary>
+    /// <param name="oldIndex">The old index.</param>
+    /// <param name="newIndex">The new index.</param>
+    /// <param name="items">The items.</param>
     protected virtual void ListArrangeItems(int oldIndex, int newIndex, IList<T> items)
     {
         var itemToMove = items[oldIndex];
