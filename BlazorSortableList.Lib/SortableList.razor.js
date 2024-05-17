@@ -166,6 +166,12 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
 
             // Notify .NET to update its model and re-render
             component.invokeMethodAsync('OnDeselectJS', event.from.id, index);
+        },
+        onEnd:(event) => {
+            if (DEBUG_MODE) {
+                console.log("onEnd:");
+                console.log(event);
+            }
         }
     });
 }
