@@ -1,3 +1,4 @@
+using BlazorSortableList.DemoApp.Client;
 using BlazorSortableList.DemoApp.Components;
 
 namespace BlazorSortableList.DemoApp
@@ -13,6 +14,8 @@ namespace BlazorSortableList.DemoApp
             services.AddRazorComponents()
                 .AddInteractiveServerComponents()
                 .AddInteractiveWebAssemblyComponents();
+
+            services.AddSingleton<IPersistenceSample, PersistenceSample>();
 
             //services.AddServerSideBlazor().AddCircuitOptions(option => { option.DetailedErrors = true; });
 
