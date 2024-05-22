@@ -1,14 +1,17 @@
-﻿<div class="card has-border-light has-background-blazor1">
-    <p class="is-size-4 p-2 ml-4">@Item.Name</p>
-    @if (Item.Children != null)
-    {
-        <SortableList Id="@($"{NestedIdPrefix}{Item.Id}")" GroupModel="@GroupModel" Context="child" Style="margin:0.5rem">
-            <SortableItemTemplate>
-                <SortableListNested NestedIdPrefix="@NestedIdPrefix" Item="child" GroupModel="@GroupModel"/>
-            </SortableItemTemplate>
-        </SortableList>
-    }
-</div>
+﻿@if (Item.Children != null)
+{
+    <SortableList Id="@($"{NestedIdPrefix}{Item.Id}")" GroupModel="@GroupModel" Context="child" Style="margin:0.5rem">
+        <SortableItemTemplate>
+            <div class="card has-border-light has-background-blazor1">
+                <p class="is-size-4 p-2 ml-4">@child.Name</p>
+                @if (child.Children != null)
+                {
+                    <SortableListNested NestedIdPrefix="@NestedIdPrefix" Item="child" GroupModel="@GroupModel" />
+                }
+            </div>
+        </SortableItemTemplate>
+    </SortableList>
+}
 
 
 @code {

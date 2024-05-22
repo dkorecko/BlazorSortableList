@@ -23,7 +23,13 @@
                 <div class="column" style="background-color: #00bfff;">
                     <SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
-                            <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
+                            <div class="card has-border-light has-background-blazor1">
+                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                @if (item.Children != null)
+                                {
+                                    <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
+                                }
+                            </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
@@ -45,7 +51,13 @@
 
     <SortableList Id=""@ListIdRoot"" GroupModel=""@_group"" Context=""item"">
         <SortableItemTemplate>
-            <SortableListNested NestedIdPrefix=""@ListIdNested"" Item=""item"" GroupModel=""@_group"" />
+            <div class=""card has-border-light has-background-blazor1"">
+                <p class=""is-size-4 p-2 ml-4"">@item.Name</p>
+                @if (item.Children != null)
+                {
+                    <SortableListNested NestedIdPrefix=""@ListIdNested"" Item=""item"" GroupModel=""@_group"" />
+                }
+            </div>
         </SortableItemTemplate>
     </SortableList>
     @code {
