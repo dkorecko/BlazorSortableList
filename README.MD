@@ -315,10 +315,19 @@ Support for nested lists added.
 ```html
 <SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
     <SortableItemTemplate>
-        <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
+        <div class="card has-border-light has-background-blazor1">
+            <p class="is-size-4 p-2 ml-4">@item.Name</p>
+            @if (item.Children != null)
+            {
+                <SortableListNested NestedIdPrefix="@ListIdNested" Item="item" GroupModel="@_group" />
+            }
+        </div>
     </SortableItemTemplate>
 </SortableList>
 ```  
+> **Note**: Very important that direct children will be in the same component 
+In other case new component marker (empty comment) will destroy JS layout.
+
 *Code behind*
 ```csharp
 private const string ListIdRoot = "NestedListIdRoot";
@@ -421,7 +430,7 @@ Sometimes, when updating the software, the browser used an old version of JavaSc
 If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console/Network tab. Then select "Disable Cache" and refresh the page.
 
 ## History
-V2.1 - added support of nested lists.
+V2.1 - added support of nested lists.  
 V2.0 - **Breaking changes!** Added support for multiple lists. Multiple selections possible too.  
 V1.2 - addition of data abstraction classes  
 V1.1 - added DefaultSort parameter  
