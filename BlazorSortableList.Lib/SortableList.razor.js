@@ -62,7 +62,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 console.log(event);
             }
 
-
+            let oldIndex = event.oldDraggableIndex;
             let newIndex = event.newDraggableIndex;
             // in multi selection mode we have newIndicies only
             let newIndicies = Array.from(event.newIndicies);
@@ -83,15 +83,19 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                     event.to.insertBefore(item.multiDragElement, event.to.childNodes[item.index]);
                 });
             } else {
+                if (DEBUG_MODE) {
+                    //console.log("remove item for update:");
+                    //console.log(event.item);
+                    //console.log("insert it before:", event.to, event.oldIndex, event.to.childNodes, event.to.childNodes[event.oldIndex]);
+                }
                 event.item.remove();
+
+                // method inserts a child node before an existing child. insertBefore(newNode, referenceNode)
+                // referenceNode - The node before which newNode is inserted
                 event.to.insertBefore(event.item, event.to.childNodes[event.oldIndex]);
             }
             // Notify .NET to update its model and re-render
-            component.invokeMethodAsync('OnUpdateJS',
-                event.oldDraggableIndex,
-                newIndex,
-                event.from.id
-            );
+            component.invokeMethodAsync('OnUpdateJS', oldIndex, newIndex, event.from.id);
         },
         onRemove: (event) => {
             if (DEBUG_MODE) {
@@ -103,7 +107,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
                 // Remove the clone
                 event.clone.remove();
             }
-
+            let oldIndex = event.oldDraggableIndex;
             let newIndex = event.newDraggableIndex;
 
             // in multi selection mode we have newIndicies only
@@ -130,11 +134,7 @@ export function init(id, group, pull, put, sort, handle, filter, component, forc
             }
 
             // Notify .NET to update its model and re-render
-            component.invokeMethodAsync('OnRemoveJS',
-                event.oldDraggableIndex,
-                newIndex,
-                event.from.id,
-                event.to.id);
+            component.invokeMethodAsync('OnRemoveJS', oldIndex, newIndex, event.from.id, event.to.id);
         },
         onSelect: (event) => {
             if (DEBUG_MODE) {
