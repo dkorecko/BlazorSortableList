@@ -8,6 +8,10 @@ namespace BlazorSortableList.DemoApp.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+            var services = builder.Services;
+
+            services.AddSingleton<IPersistenceSample, PersistenceSample>();
+
             await builder.Build().RunAsync();
         }
     }
