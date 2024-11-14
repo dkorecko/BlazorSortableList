@@ -1,12 +1,12 @@
 ﻿@page "/demopage"
 @using BlazorSortableList.DemoApp.Client.Components
-@using BlazorXTabs
 @rendermode InteractiveAuto
 
 <PageTitle>Blazor sortable list demo</PageTitle>
 <PageHeader></PageHeader>
-<XTabs>
-    <XTab Title="Single list">
+
+<TabControl>
+    <TabPage Title="Single list">
         <div class="has-background-light">
             <section class="section has-background-white">
                 <SimpleList></SimpleList>
@@ -18,8 +18,8 @@
                 <Filtering></Filtering>
             </section>
         </div>
-    </XTab>
-    <XTab Title="Two lists">
+    </TabPage>
+    <TabPage Title="Two lists">
         <div class="has-background-light">
             <section class="section has-background-white">
                 <SharedLists></SharedLists>
@@ -34,15 +34,15 @@
                 <ForceFallback></ForceFallback>
             </section>
         </div>
-    </XTab>
-    <XTab Title="Three lists">
+    </TabPage>
+    <TabPage Title="Three lists">
         <div class="has-background-light">
             <section class="section">
                 <SimpleKanbanBoard></SimpleKanbanBoard>
             </section>
         </div>
-    </XTab>
-    <XTab Title="Multi selection">
+    </TabPage>
+    <TabPage Title="Multi selection">
         <div class="has-background-light">
             <section class="section">
                 <MultiSelection></MultiSelection>
@@ -54,8 +54,8 @@
                 <MultiSelectionNoReset></MultiSelectionNoReset>
             </section>
         </div>
-    </XTab>
-    <XTab Title="Nested">
+    </TabPage>
+    <TabPage Title="Nested">
         <div class="has-background-light">
             <section class="section">
                 <NestedLists></NestedLists>
@@ -64,8 +64,8 @@
                 <NestedLists2></NestedLists2>
             </section>
         </div>
-    </XTab>
-</XTabs>
+    </TabPage>
+</TabControl>
 
 @code {
 

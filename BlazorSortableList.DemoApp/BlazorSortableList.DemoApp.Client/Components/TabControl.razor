@@ -1,0 +1,43 @@
+﻿<div class="btn-group" role="group">
+    @foreach (var tabPage in Pages)
+    {
+        if (tabPage == ActivePage)
+        {
+            <button type="button" class="btn btn-primary" @onclick="(() => ActivatePage(tabPage))">@tabPage.Title</button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-primary" @onclick="(() => ActivatePage(tabPage))">@tabPage.Title</button>
+        }
+    }
+</div>
+
+<CascadingValue Value="this">
+     @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private List<TabPage> Pages = new List<TabPage>();
+
+    public void AddPage(TabPage tabPage)
+    {
+        Pages.Add(tabPage);
+        if (Pages.Count == 1)
+        {
+            ActivePage = tabPage;
+        }
+        StateHasChanged();
+    }
+
+    public TabPage ActivePage { get; set; }
+
+    public void ActivatePage(TabPage tabPage)
+    {
+        ActivePage = tabPage;
+        StateHasChanged();
+    }
+}
+

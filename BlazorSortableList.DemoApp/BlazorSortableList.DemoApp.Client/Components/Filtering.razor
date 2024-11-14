@@ -1,60 +1,43 @@
-@using BlazorXTabs
-@using BlazorSortableList.DemoApp.Client.Models
-
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Filtering</h1>
     <p class="mb-4">In the list below, you cannot drag the item in red. This is because it is filtered out with a filter CSS class. Pass the name of this class to the `Filter` property to filter out an item.</p>
-    @* <Tabs CodeContent="@codeContent">
-        <ExampleContent>
+
+
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Id="filtering" Filter=".filtered" Items="items" OnUpdate="@SortList" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-text-white has-cursor-grab @(item.Disabled ? "filtered has-background-danger" : "has-background-blazor")">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>
-        </ExampleContent>
-    </Tabs> *@
-    
-     <XTabs>
-        <XTab Title="Example">
-            <div class="columns">
-                <div class="column is-half">
-                    <SortableList Id="filtering" Filter=".filtered" Items="items" OnUpdate="@SortList" Context="item">
-                        <SortableItemTemplate>
-                            <div class="card has-border-light has-text-white has-cursor-grab @(item.Disabled ? "filtered has-background-danger" : "has-background-blazor")">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
-                            </div>
-                        </SortableItemTemplate>
-                    </SortableList>
-                </div>
-            </div>
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
-        <XTab Title="Example V1.2">
+        </TabPage>
+        <TabPage Title="Example V1.2">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Id="@ListId" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-cursor-grab @(item.Disabled ? "filtered has-background-danger" : "has-background-blazor1")">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>            
-        </XTab>
-        <XTab Title="Code V1.2">
+        </TabPage>
+        <TabPage Title="Code V1.2">
             <pre>@codeContent2</pre>
-        </XTab>
+        </TabPage>
         
-    </XTabs>
+    </TabControl>
 </div>
 
 @code {

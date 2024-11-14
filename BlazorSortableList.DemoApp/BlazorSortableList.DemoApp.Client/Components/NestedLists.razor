@@ -1,5 +1,4 @@
 ﻿@using BlazorSortableList.DemoApp.Client.Models
-@using BlazorXTabs
 
 <style>
     /*  .sortable-ghost {
@@ -17,8 +16,8 @@
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Simple Nested Lists</h1>
     <p class="mb-4">You can rearrange items within each level and drag items between levels.</p>
-    <XTabs>
-        <XTab Title="Example">
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns" style="width: 98%">
                 <div class="column" style="background-color: #00bfff;">
                     <SortableList Id="@ListIdRoot" GroupModel="@_group" Context="item">
@@ -34,11 +33,11 @@
                     </SortableList>
                 </div>
             </div>
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
-    </XTabs>
+        </TabPage>
+    </TabControl>
 
 
 </div>

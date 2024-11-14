@@ -1,25 +1,22 @@
 ﻿@page "/"
 @attribute [StreamRendering]
+@rendermode InteractiveServer
 
 @using BlazorSortableList.DemoApp.Client.Components
-
 @inject NavigationManager Navigation
 
 <PageTitle>Blazor sortable list demo</PageTitle>
 <PageHeader></PageHeader>
 <div>Loading...</div>
+
+
 @code
 {
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnAfterRender(bool firstRender)
     {
-        await base.OnInitializedAsync();
-
-        //Webassembly loading trick. Do not use in production.
-        //Babylon.Blazor project has a better solution
-        await Task.Delay(1000);
-
-        //Server side must have a home page, so we can switch to client side later,
-        Navigation.NavigateTo("demopage");
+        if (firstRender)
+        {
+            Navigation.NavigateTo("demopage");
+        }
     }
 }

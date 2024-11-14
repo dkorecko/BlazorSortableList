@@ -1,4 +1,3 @@
-@using BlazorXTabs
 @using BlazorSortableList.DemoApp.Client.Models
 
 <style>
@@ -16,8 +15,8 @@
         Note that when an item is dragged into a different list, it assumes the visual style of that list. 
         This is because Blazor controls the rendering of the list items.</p>
    <button @onclick="RefreshControl">Refresh</button>
-   <XTabs>
-           <XTab Title="Example">
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns">
                 <div class="column">
                     <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
@@ -38,12 +37,12 @@
                     </SortableList>
                 </div>
             </div>                  
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
+        </TabPage>
         
-    </XTabs>
+    </TabControl>
 </div>
 
 @code {

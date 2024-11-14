@@ -1,42 +1,17 @@
-﻿@using BlazorXTabs
-@using BlazorSortableList.DemoApp.Client.Models
+﻿@using BlazorSortableList.DemoApp.Client.Models
 
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Force Fallback to JavaScript</h1>
     <p class="mb-4">Due to HTML5 drag and drop not being universally supported and the loss of control over the styling forceFallback is set to true by default for this library so the HTML5 drag and drop is not used. If preferred, you can set the 'ForceFallback' to false to get SortableJS's default behavior. The list on the left has 'ForceFallback' set to true, and the list on the right has ForceFallback set to false.</p>
-    @* <Tabs CodeContent="@codeContent">
-        <ExampleContent>
-            <div class="columns">
-                <div class="column">
-                    <SortableList Id="forceFallback1" Items="items1" OnUpdate="@SortList1" Context="item">
-                        <SortableItemTemplate>
-                            <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
-                            </div>
-                        </SortableItemTemplate>
-                    </SortableList>
-                </div>
-                <div class="column">
-                    <SortableList Id="forceFallback2" Items="items2" OnUpdate="@SortList2" Context="item" ForceFallback="false">
-                        <SortableItemTemplate>
-                            <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
-                            </div>
-                        </SortableItemTemplate>
-                    </SortableList>
-                </div>
-            </div>
-        </ExampleContent>
-    </Tabs> *@
     
-    <XTabs>
-        <XTab Title="Example">
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns">
                 <div class="column">
                     <SortableList Id="forceFallback1" Items="items1" OnUpdate="@SortList1" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
@@ -45,23 +20,23 @@
                     <SortableList Id="forceFallback2" Items="items2" OnUpdate="@SortList2" Context="item" ForceFallback="false">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
-        <XTab Title="Example V1.2">
+        </TabPage>
+        <TabPage Title="Example V1.2">
             <div class="columns">
                 <div class="column">
                     <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor1 has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
@@ -70,17 +45,17 @@
                     <SortableList Id="@ListId2" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor1 has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>            
-        </XTab>
-        <XTab Title="Code V1.2">
+        </TabPage>
+        <TabPage Title="Code V1.2">
             <pre>@codeContent2</pre>
-        </XTab>
-    </XTabs>
+        </TabPage>
+    </TabControl>
 </div>
 
 @code {

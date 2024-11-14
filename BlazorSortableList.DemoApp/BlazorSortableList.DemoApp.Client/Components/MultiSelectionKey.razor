@@ -1,4 +1,3 @@
-@using BlazorXTabs
 @using BlazorSortableList.DemoApp.Client.Models
 
 <style>
@@ -15,9 +14,9 @@
         Providing the same "Group" string name for both lists is what links them together. 
     </p>
     <p>Press <strong>Alt</strong> key to select additional item</p>
-   
-   <XTabs>
-           <XTab Title="Example">
+
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns">
                 <div class="column">
                     <SortableList Id="@ListId1" GroupModel="@_group" Context="item">
@@ -38,12 +37,12 @@
                     </SortableList>
                 </div>
             </div>                  
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
+        </TabPage>
         
-    </XTabs>
+    </TabControl>
 </div>
 
 @code {

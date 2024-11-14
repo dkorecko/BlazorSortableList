@@ -1,5 +1,4 @@
 ﻿@using BlazorSortableList.DemoApp.Client.Models
-@using BlazorXTabs
 
 <style>
    /*  .sortable-ghost {
@@ -17,8 +16,8 @@
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Simple Kanban Board</h1>
     <p class="mb-4">You can rearrange items within each list and drag items between lists.</p>
-    <XTabs>
-        <XTab Title="Example">
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns" style="width: 98%">
                 <div class="column is-one-third" style="background-color: #00bfff; margin: 0.5rem;">
                     To Do
@@ -51,11 +50,11 @@
                     </SortableList>
                 </div>
             </div>
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
-    </XTabs>
+        </TabPage>
+    </TabControl>
    
 
 </div>

@@ -1,7 +1,5 @@
 @using BlazorSortableList
-@using BlazorSortableList.DemoApp.Client.Models
 
-@using BlazorXTabs
 
 @* remove bootstrap borders *@
 <style>
@@ -18,73 +16,58 @@
 
 <div class="container">
     <h1 class="title is-size-1 has-text-centered">Simple List</h1>
-    @* <Tabs CodeContent="@codeContent1">
-        <ExampleContent>
-            <div class="columns">
-                <div class="column is-half">
-                    <SortableList Id="simpleList" Items="items" OnUpdate="@SortList" Context="item">
-                        <SortableItemTemplate>
-                            <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
-                            </div>
-                        </SortableItemTemplate>
-                    </SortableList>
-                </div>
-            </div>
-        </ExampleContent>
-    </Tabs>  *@
     
-    <XTabs>
-        <XTab Title="Example">
+    <TabControl>
+        <TabPage Title="Example">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Id="simpleList" Items="@items" OnUpdate="@SortList" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>
-        </XTab>
-        <XTab Title="Code">
+        </TabPage>
+        <TabPage Title="Code">
             <pre>@codeContent1</pre>
-        </XTab>
-        <XTab Title="Example V1.1">
+        </TabPage>
+        <TabPage Title="Example V1.1">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Items="@items" Context="item" DefaultSort>
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor has-text-white has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>
-        </XTab>
-        <XTab Title="Code V1.1">
+        </TabPage>
+        <TabPage Title="Code V1.1">
             <pre>@codeContent2</pre>
-        </XTab>
+        </TabPage>
         
-        <XTab Title="Example V1.2">
+        <TabPage Title="Example V1.2">
             <div class="columns">
                 <div class="column is-half">
                     <SortableList Id="@ListId" GroupModel="@_group" Context="item">
                         <SortableItemTemplate>
                             <div class="card has-border-light has-background-blazor1 has-cursor-grab">
-                                <p class="is-size-4 p-2 ml-4">@item.Name</p>
+                                <p class="is-size-4 p-2 custom-border">@item.Name</p>
                             </div>
                         </SortableItemTemplate>
                     </SortableList>
                 </div>
             </div>
-        </XTab>
-        <XTab Title="Code V1.2">
+        </TabPage>
+        <TabPage Title="Code V1.2">
             <pre>@codeContent3</pre>
-        </XTab>
-    </XTabs>
+        </TabPage>
+    </TabControl>
 
 </div>
 
