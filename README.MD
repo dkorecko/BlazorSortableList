@@ -430,6 +430,7 @@ Sometimes, when updating the software, the browser used an old version of JavaSc
 If you see any exceptions or the demo application doesn't work for you, try opening the Browser Developer Console/Network tab. Then select "Disable Cache" and refresh the page.
 
 ## History
+V2.1.1 - update to .NET 9.0, replace TabControl in Demo application
 V2.1 - added support of nested lists.  
 V2.0 - **Breaking changes!** Added support for multiple lists. Multiple selections possible too.  
 V1.2 - addition of data abstraction classes  
